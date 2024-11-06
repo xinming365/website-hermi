@@ -1,0 +1,164 @@
+.solutions-showcase {
+    margin: 40px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.solutions-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.solutions-titles {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.solution-title {
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    color: #666;
+}
+
+.solution-title.active {
+    background: #1a73e8;
+    color: white;
+}
+
+.carousel-container {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    padding: 40px 0;
+}
+
+.carousel {
+    position: relative;
+    height: 100%;
+    perspective: 2000px;
+}
+
+.solution-card {
+    position: absolute;
+    width: 65%;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.solution-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: transform 0.8s ease;
+}
+
+.solution-card:hover img {
+    transform: scale(1.05);
+}
+
+.solution-card.current {
+    transform: translate(-50%, -50%) scale(1) translateZ(0);
+    z-index: 3;
+    opacity: 1;
+}
+
+.solution-card.prev {
+    transform: translate(-100%, -50%) scale(0.85) translateZ(-100px) rotateY(10deg);
+    z-index: 2;
+    opacity: 0.7;
+}
+
+.solution-card.next {
+    transform: translate(0%, -50%) scale(0.85) translateZ(-100px) rotateY(-10deg);
+    z-index: 2;
+    opacity: 0.7;
+}
+
+.solution-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+    color: white;
+    border-radius: 0 0 20px 20px;
+    transform: translateY(0);
+    transition: transform 0.5s ease;
+    backdrop-filter: blur(10px);
+}
+
+.solution-card:hover .solution-info {
+    transform: translateY(-10px);
+}
+
+.solution-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+}
+
+.solution-info p {
+    margin: 0;
+    font-size: 1em;
+}
+
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-arrow:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow:before {
+    content: '';
+    border: solid #333;
+    border-width: 0 3px 3px 0;
+    padding: 8px;
+    display: inline-block;
+  }
+
+.prev-arrow {
+    left: 15%;
+}
+
+.next-arrow {
+    right: 15%;
+}
+
+.prev-arrow:before {
+    transform: rotate(135deg);
+}
+
+.next-arrow:before {
+    transform: rotate(-45deg);
+}

@@ -1,0 +1,38 @@
+@import './base.css';
+
+#app {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    /* place-items: center; */
+    margin: 0;  /* 添加这行去除body的默认外边距 */
+    /* min-height: 100vh; 确保body至少占满整个视口高度 */
+    width: 100%; /* 确保body占满整个视口宽度 */
+  }
+
+  #app {
+    max-width: 100%;
+    width: 100%; /* 添加这行确保app占满整个宽度 */
+    padding: 0 0rem;
+  }
+}

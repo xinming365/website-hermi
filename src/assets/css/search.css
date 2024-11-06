@@ -1,0 +1,94 @@
+/* .search-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+} */
+
+.search-container {
+    max-width: 900px;
+    margin: 2rem auto 2rem;
+    text-align: center;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid #283593;
+    border-radius: 4px;
+}
+
+.search-suggestions {
+    display: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.search-suggestions div {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.search-suggestions div:hover {
+    background-color: #f1f3f5;
+}
+.product-hints {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+
+#product-search {
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #3498db;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.tech-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+.tech-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+}
+
+.tech-button:active {
+    transform: scale(0.98);
+}
+
+/* 添加一个发光效果 */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+}
+
+.tech-button:hover {
+    animation: glow 1.5s infinite;
+}
+
+.search-spacing {
+    margin-top: 20px; /* 您可以根据需要调整这个值 */
+}

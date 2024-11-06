@@ -1,0 +1,107 @@
+"use strict";
+Vue.component('lb-pagination', {
+    template: "<div class=\"lb-pagination\">\n    <template v-for=\"num in list\">\n      <div v-if=\"num != 'left' && num != 'right'\" class=\"lb-pagination__item\" :class=\"{active: current == num}\" @click=\"turnTo(num)\">\n        {{num}}\n      </div>\n      <div v-else class=\"lb-pagination__item\" @click=\"turnTo(num)\">...</div>\n    </template>\n    <div class=\"lb-pagination__goto\" v-if=\"showTarget\">\n      \u524D\u5F80\n      <input class=\"lb-pagination__number\" type=\"number\" v-model=\"targetPage\" @keydown.enter=\"gotoTargetPage\" />\n      \u9875\n      <span class=\"lb-pagination__button\" @click=\"gotoTargetPage\" :class=\"{'lb-pagination__button--disabled': !targetPage}\">\u786E\u5B9A</span>\n    </div>\n    <div class=\"lb-pagination__total\" v-if=\"showTotal\">\u5171 {{total}} \u6761</div>\n  </div>",
+    props: {
+        step: {
+            type: Number,
+            default: 5
+        },
+        showLen: {
+            type: Number,
+            default: 5
+        },
+        pageNum: {
+            type: Number,
+            default: 1
+        },
+        pageSize: {
+            default: 10
+        },
+        total: {
+            type: Number,
+            default: 0
+        },
+        showTarget: {
+            type: Boolean,
+            default: true
+        },
+        showTotal: {
+            type: Boolean,
+            default: true
+        }
+    },
+    data: function data() {
+        return {
+            current: 1,
+            targetPage: undefined
+        };
+    },
+    computed: {
+        maxPageNum: function maxPageNum() {
+            return Math.ceil(this.total / this.pageSize);
+        },
+        list: function list() {
+            if (this.maxPageNum <= this.showLen) {
+                return Array.from(Array(this.maxPageNum), function(v, k) {
+                    return k + 1;
+                });
+            }
+            var flag = Math.floor(this.showLen / 2);
+            var list = [];
+            var start = this.current - flag >= 1 ? this.current - flag : 1;
+            var end = this.current + flag <= this.maxPageNum ? this.current + flag : this.maxPageNum;
+            if (start > end) {
+                start = end - flag;
+            }
+            for (var i = start; i <= end; i++) {
+                list.push(i);
+            }
+            if (list[0] > 1) {
+                list.unshift('left');
+                list.unshift(1);
+            }
+            if (list[list.length - 1] < this.maxPageNum) {
+                list.push('right');
+                list.push(this.maxPageNum);
+            }
+            return list;
+        }
+    },
+    methods: {
+        turnTo: function turnTo(num) {
+            if (num == this.current) {
+                console.warn('点击当前页无效');
+                return false;
+            }
+            if (num == 'left') {
+                this.current = this.current - this.step > 0 ? this.current - this.step : 1;
+            } else if (num == 'right') {
+                this.current = this.current + this.step < this.maxPageNum ? this.current + this.step : this.maxPageNum;
+            } else {
+                this.current = num;
+            }
+            this.$emit('change', this.current);
+        },
+        gotoTargetPage: function gotoTargetPage() {
+            if (this.targetPage) {
+                var temp = parseInt(this.targetPage);
+                if (temp < 1) {
+                    temp = 1;
+                }
+                if (temp > this.maxPageNum) {
+                    temp = this.maxPageNum;
+                }
+                this.turnTo(temp);
+                this.targetPage = undefined;
+            }
+        }
+    },
+    watch: {
+        pageNum: {
+            handler: function handler(val) {
+                this.current = parseInt(val) || 1;
+            },
+            immediate: true
+        }
+    }
+});

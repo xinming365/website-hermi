@@ -1,0 +1,776 @@
+.device-template {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.global-product-title {
+  font-size: 2.5rem;  /* 增大字体 */
+  font-weight: 700;   /* 加粗字重 */
+  letter-spacing: -0.8px;  /* 调整字间距 */
+  color: #1d1d1f;
+  margin: 2.5rem 0;   /* 增加上下间距 */
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  text-align: center;
+  position: relative;  /* 添加装饰线条 */
+  padding-bottom: 1rem;
+  text-transform: capitalize;  /* 首字母大写 */
+  line-height: 1.2;   /* 优化行高 */
+}
+
+.global-product-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20%;
+  height: 3px;
+  background: linear-gradient(90deg, #007AFF, #00C7BE);  /* 渐变装饰线 */
+  border-radius: 2px;
+}
+
+/* .product-title {
+  font-size: 3rem;
+  color: #1d1d1f;
+  letter-spacing: -0.003em;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  text-align: center;
+} */
+
+
+.product-showcase {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  border-radius: 20px;
+}
+
+/* .product-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+} */
+
+
+.image-gallery {
+  /* flex: 1;  占据50% */
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* .thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+} */
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  opacity: 0.7;
+  transition: border-color 0.3s;
+}
+
+.thumbnail.active {
+  border-color: #007bff;
+}
+
+.product-info {
+  /* flex: 1;  占据50% */
+  flex: 0 0 50%;
+  max-width: 50%;
+  background: rgba(245, 245, 247, 0.7);
+  border-radius: 18px;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #2c3e50; /* 高级深灰色 */
+}
+
+.product-info .description {
+  color: #2c3e50; /* 高级深灰色 */
+  font-size: 1.1rem;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+  font-weight: 300; /* 更细的字重增加优雅感 */
+}
+
+
+.product-advantages {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 14px;
+  padding: 0.2rem;
+  /* margin-top: 1rem; */
+}
+
+.product-advantages h2 {
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1d1d1f; /* 苹果风格的深色 */
+  margin-bottom: 0.1rem;
+}
+
+.product-advantages ul {
+  list-style: none;
+  padding: 0;
+}
+
+.product-advantages li {
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.0rem;
+  color: #424245;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.product-advantages li:before {
+  content: "•";
+  color: #0066cc;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.product-features {
+  flex: 1;
+  background: linear-gradient(145deg, #f8f5f5, #f4f1f1);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+/* .main-applications {
+  flex: 1;
+  background: linear-gradient(145deg, #f8f5f5, #f4f1f1);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+} */
+
+.main-applications {
+  opacity: 1;
+  visibility: visible;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+.main-applications h2 {
+  color: #1c1c1c;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+}
+.main-applications h2:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: #4a90e2;   
+}
+
+.main-applications ul {
+  list-style-type: none;
+  padding: 0;
+}
+.main-applications li {
+  color: #5a5656;
+  margin-bottom: 10px;
+  padding-left: 25px;
+  position: relative;
+}
+.main-applications li:before {
+  content: '>';
+  color: #4a90e2;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+
+
+.product-features h2 {
+  color: #1c1c1c;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.product-features h2:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: #4a90e2;   
+}
+
+.product-features ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product-features li{
+  color: #5a5656;
+  margin-bottom: 10px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.product-features li:before {
+  content: '>';
+  color: #4a90e2;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+
+h2 {
+  margin-bottom: 15px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+
+.product-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+
+
+
+.item-product-table th {
+  background-color: #445669;  /* 更柔和的深色背景 */
+  color: #ffffff;  /* 纯白色文字提高对比度 */
+  font-weight: 500;
+  padding: 14px 16px;  /* 稍微增加内边距 */
+  text-align: left;
+  border-bottom: 2px solid #536b88;  /* 更亮的边框颜色 */
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: 0.3px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;  /* 平滑过渡效果 */
+}
+
+.product-table th:hover,
+.item-product-table th:hover {
+  background-color: #536b88;  /* 更柔和的hover状态 */
+  /* transform: translateY(-1px);  轻微上浮效果 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  /* 添加微妙阴影 */
+}
+
+
+.item-product-table {
+  margin-bottom: 20px;
+}
+
+.item-product-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.item-product-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.item-product-notes {
+  margin-bottom: 20px;
+}
+
+.item-product-notes ol {
+  padding-left: 20px;
+}
+
+.item-product-notes li {
+  margin-bottom: 5px;
+}
+
+
+
+.related-products {
+  margin-top: 2rem;
+}
+
+.product-table h2,
+.product-features h2,
+.related-products h2 {
+  background: linear-gradient(to right, #f5f5f5, #e0e0e0);
+  color: #2c3e50; 
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.product-table h2:hover,
+.product-features h2:hover,
+.related-products h2:hover {
+  background: linear-gradient(to right, #717172, #4e5257);
+  /* background: linear-gradient(to right, #3498db, #2980b9);  */
+  color: #ffffff;
+  transform: translateY(-1px);
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); */
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3); /* 添加带颜色的阴影 */
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.product-item {
+  text-align: center;
+}
+
+.product-thumbnail {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-title {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+
+
+
+.clickable-header {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 2px solid transparent;
+}
+
+.clickable-header.active {
+  border-bottom: 2px solid #007bff;
+  color: #007bff;
+}
+
+
+
+
+
+.feature-description {
+  line-height: 1.8;  /* 增加行间距 */
+  font-size: 15px;
+  color: #333;
+  margin: 20px 0;
+}
+
+.product-introduction-title {
+  color: #2c3e50;  
+  font-size: 1.3em;
+  font-weight: 600;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-introduction-title::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('https://api.iconify.design/mdi:cube-scan.svg?color=%2300a4e4');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+
+
+.item-product-table-title {
+  position: relative;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-left: 32px; /* 增加左内边距为图标留出空间 */
+  display: flex;      /* 使用flex布局 */
+  align-items: center;/* 垂直居中对齐 */
+  color: #34495e;    /* 更新文字颜色 */
+}
+
+.item-product-table-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 24px;     /* 设置图标宽度 */
+  height: 24px;    /* 设置图标高度 */
+  background-image: url('https://api.iconify.design/material-symbols:table-chart-view-rounded.svg?color=%23007AFF');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.item-product-table table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item-product-table td {
+  padding: 12px 16px;
+  border: none;
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.item-product-table tr:nth-child(even) td {
+  background-color: #f5f5f7;
+}
+
+.item-product-table tr:hover td {
+  background-color: #f0f0f2;
+}
+
+
+
+.item-product-table-notes {
+  margin-top: 20px;
+}
+
+.item-product-notes-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.item-product-notes ol {
+  padding-left: 20px;
+}
+
+.item-product-notes li {
+  margin-bottom: 5px;
+}
+
+
+
+
+
+
+
+
+.image-viewer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-viewer-container {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.viewer-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+
+
+
+.viewer-controls {
+  padding: 20px;
+  bottom: 20px;
+  position: fixed;
+  background: rgba(63, 62, 62, 0.05); 
+  border-radius: 10px;
+  display: flex;
+  gap: 20px;
+  transform: translateX(-50%); /* 水平居中 */
+  justify-content: center;
+}
+
+.viewer-controls button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.viewer-controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+
+
+
+
+
+
+.section-headers {
+  display: flex;          /* 使用flex布局实现横向排列 */
+  gap: 20px;             /* 标题之间的间距 */
+  margin-bottom: 20px;    /* 与下方内容的间距 */
+  margin: 2rem 0;
+  padding: 0.5rem;
+  background: linear-gradient(to right, #f5f5f5, #e0e0e0);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-headers h2 {
+  cursor: pointer;
+  padding: 10px 20px;    /* 标题内边距 */
+  border-bottom: 2px solid transparent;  /* 默认下边框透明 */
+}
+
+.section-headers h2.active {
+  /* border-bottom: 2px solid #007bff;  激活状态下的下边框 */
+  color: #eaeced;                    /* 激活状态的文字颜色 */
+}
+
+.clickable-header {
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.clickable-header.active {
+  background: linear-gradient(135deg, #0062ff, #00a3ff);  /* 渐变背景 */
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 98, 255, 0.2);  /* 柔和的阴影 */
+  font-weight: 600;  /* 稍微加粗 */
+  transform: translateY(-1px);  /* 轻微上浮效果 */
+  backdrop-filter: blur(5px);  /* 毛玻璃效果 */
+}
+
+.clickable-header:hover:not(.active) {
+  /* background: rgba(44, 62, 80, 0.1); */
+  background: rgba(245, 245, 247, 0.7);  /* 使用与 product-info 相同的背景色 */
+  transform: translateY(-1px);  /* 添加悬停效果 */
+}
+
+
+
+
+
+.installation-guide {
+  /* 移除可能导致显示问题的样式 */
+  /* display: block;  添加明确的显示属性 */
+  opacity: 1;
+  /* visibility: visible; */
+  height: auto;
+  width: 100%;    /* 确保宽度正确 */
+  margin: 20px 0;
+  background: linear-gradient(145deg, #f8f5f5, #f4f1f1);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  position: relative;
+  z-index: 1;     /* 确保正确的层叠顺序 */
+}
+
+.installation-image {
+  margin: 20px 0;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.guide-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.installation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.installation-table th,
+.installation-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.installation-table th {
+  background-color: #f5f5f5;
+}
+
+
+
+
+
+
+.product-inquiry {
+  padding: 20px;
+}
+
+.brand-info {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.info-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  padding: 0.5rem 1rem;
+  background-color: #f5f5f5;
+  border-left: 4px solid #1e88e5;
+  margin-bottom: 1rem;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.brand-logo {
+  width: 120px;
+  height: auto;
+  margin-right: 15px;
+}
+
+.brand-description {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.brand-website {
+  display: inline-block;
+  padding: 8px 15px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.contact-section {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.contact-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.contact-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-section li {
+  margin-bottom: 10px;
+}
+
+.info-section {
+  margin-bottom: 2rem;
+}

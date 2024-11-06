@@ -1,0 +1,118 @@
+.article-category {
+    margin-bottom: 30px;
+}
+
+/* .article-category h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+} */
+
+.article-category h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.article-category h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: #e74c3c;
+}
+
+.article-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 5px;
+}
+
+.article-item:last-child {
+    border-bottom: none;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 0;
+}
+
+.article-item h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #0066cc;
+}
+
+.article-item h3 a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+/* 
+.article-item:hover h3 a {
+    color: #007bff;
+} */
+
+.article-item a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.article-item:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+/* .article-item:hover {
+    background-color: rgba(240, 240, 240, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+} */
+
+.article-item a:hover {
+    color: #007bff;
+}
+
+.publish-date {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+    min-width: 100px;
+    text-align: right;
+}
+
+
+
+.article-list {
+    padding: 20px;
+}
+
+.layui-card {
+    margin-bottom: 20px;
+}
+
+.layui-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.article-date {
+    color: #999;
+    font-size: 14px;
+}
+
+.article-pager {
+    text-align: center;
+    margin: 20px 0;
+}

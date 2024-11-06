@@ -1,0 +1,72 @@
+.sidebar {
+    width: 250px;
+    position: relative;
+    left: 5rem;
+    top: 0;
+    bottom: 3.5rem;
+    width: 200px;
+    float: left;
+    background-color: #f1f1f1;
+    overflow-y: auto;
+    padding-top: 30px; /* 为顶部留出空间 */
+    padding-bottom: 60px; /* 为底部留出空间 */
+    box-sizing: border-box;
+}
+
+.sidebar h3 {
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    /* border-bottom: 2px solid #3498db; */
+    color: #2c3e50;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.category-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-item {
+    position: relative;
+}
+
+.category-item > a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.subcategory-list {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-item:hover .subcategory-list {
+    display: block;
+}
+
+.subcategory-list li a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.subcategory-list li a:hover {
+    background-color: #f1f1f1;
+}
