@@ -74,7 +74,13 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ContactView
-    }
+    },
+    // 购物车
+    {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('../views/ShoppingCart/Index.vue')
+    },
   ]
 })
 

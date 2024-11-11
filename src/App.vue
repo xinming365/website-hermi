@@ -13,9 +13,19 @@ import '@/assets/css/main.css'
 // import 'jquery'
 // import '@/libs/quotes/js/toolbar.js'
 
+import { useRoute, useRouter } from 'vue-router'
+import { computed, onMounted } from 'vue'
+const route = useRoute()
+const router = useRouter()
+const isShowSideBar = computed(() => {
+  console.log('computed', route.path);
+  if(route.path === '/cart') return false
+  else return true
+})
 
-import { onMounted } from 'vue'
-
+const handleJump = (path) => {
+  router.push(path)
+}
 onMounted(() => {
   // 动态加载toolbar.js
   const script = document.createElement('script')
@@ -37,7 +47,7 @@ onMounted(() => {
       <NavBar class="nav" />
       
       <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" v-if="isShowSideBar">
           <SideBar />
         </aside>
 
@@ -59,11 +69,11 @@ onMounted(() => {
         <i class="lb-toolbar__icon lb-icon-history"></i>
       </a>
     </div>
-    <div class="lb-toolbar__item" title="购物车" id="cartAnimationEnd">
-      <a class="lb-toolbar__link" href="/cart.html">
+    <div class="lb-toolbar__item" title="购物车" id="cartAnimationEnd" @click="handleJump('/cart')">
+      <div class="lb-toolbar__link" href="/cart.html">
         <i class="lb-toolbar__icon lb-icon-cart"></i>
         <span id="cartNums" class="lb-toolbar__badge">12</span>
-      </a>
+      </div>
     </div>
     <div class="lb-toolbar__item" title="产品对比" id="compareEntry">
       <a href="/compare.html">
