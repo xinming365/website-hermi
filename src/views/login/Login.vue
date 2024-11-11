@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-card class="box-card">
-        <h2>登录</h2>
+        <h2>登录1</h2>
         <el-form
           :model="ruleForm"
           status-icon
