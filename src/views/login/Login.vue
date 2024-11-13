@@ -1,82 +1,68 @@
 <template>
-    <div>
-      <el-card class="box-card">
-        <h2>登录</h2>
-        <el-form
-          :model="ruleForm"
-          status-icon
-          :rules="rules"
-          ref="ruleForm"
-          label-position="left"
-          label-width="70px"
-          class="login-from"
-        >
-          <el-form-item label="用户名" prop="uname">
-            <el-input v-model="ruleForm.uname"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input
-              type="password"
-              v-model="ruleForm.password"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-        <div class="btnGroup">
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >登录</el-button
-          >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-          <router-link to="/register">
-            <el-button style="margin-left:10px">注册</el-button>
-          </router-link>
-        </div>
-      </el-card>
+  <div class="header">
+    <div class="header-register" @click="handleClick(1)">注册丨</div>
+    <div class="header-login" @click="handleClick(0)">登录</div>
+  </div>
+  <el-dialog
+    class="dialog"
+    :close-on-click-modal="false"
+    :title="dialogTitle"
+    v-model="showDialog"
+    @closed="isRegisterDialog = false"
+    width="30%"
+  >
+    <RegisterForm ref="registerRef" v-if="isRegisterDialog" />
+    <LoginForm ref="loginRef" v-else />
+    <div class="dialog-footer">
+      <el-button type="primary" round @click="handleSubmit">{{
+        dialogTitle
+      }}</el-button>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        ruleForm: {
-          uname: "",
-          password: "",
-        },
-        rules: {
-          uname: [
-            { required: true, message: "用户名不能为空！", trigger: "blur" },
-          ],
-          password: [
-            { required: true, message: "密码不能为空！", trigger: "blur" },
-          ],
-        },
-      };
-    },
-    methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert("submit!");
-          } else {
-            console.log("error submit!!");
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .box-card {
-    margin: auto auto;
-    width: 400px;
-  }
-  .login-from {
-    margin: auto auto;
-  }
-  </style>
+  </el-dialog>
+</template>
+
+<script setup lang="ts">
+import RegisterForm from "./RegisterForm.vue";
+import LoginForm from "./LoginForm.vue";
+import { ref, computed } from "vue";
+
+const isRegisterDialog = ref(false);
+const showDialog = ref(false);
+const dialogTitle = computed(() => (isRegisterDialog.value ? "注册" : "登录"));
+
+const handleClick = (status?: number) => {
+  console.log(status);
+  status ? (isRegisterDialog.value = true) : (isRegisterDialog.value = false);
+  console.log("isRegisterDialog", isRegisterDialog.value);
+
+  showDialog.value = true;
+};
+
+// 提交
+const loginRef = ref(null);
+const registerRef = ref(null);
+const handleSubmit = () => {
+  const params = isRegisterDialog.value
+    ? registerRef.value.registerForm
+    : loginRef.value.loginForm;
+  console.log("表单数据", params);
+};
+</script>
+
+<style scoped>
+.header {
+  background-color: #0c1824d9;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dialog-footer {
+  padding-bottom: 20px;
+  text-align: center;
+}
+.dialog-footer .el-button {
+  width: 70%;
+}
+</style>

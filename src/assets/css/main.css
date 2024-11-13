@@ -27,7 +27,7 @@ body {
 
 
 /* 页头样式 */
-header {
+/* header {
     background-color: #0a1929;
     color: #4fc3f7;
     padding: 2rem 0;
@@ -46,7 +46,7 @@ header::before {
     background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, rgba(79,195,247,0) 70%);
     transform: rotate(45deg);
     z-index: 0;
-}
+} */
 
 header h1 {
     margin: 0;
