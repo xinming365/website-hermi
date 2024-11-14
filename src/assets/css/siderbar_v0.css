@@ -1,0 +1,49 @@
+.sidebar {
+    width: 250px;
+    position: relative;
+    left: 5rem;
+    top: 0;
+    bottom: 3.5rem;
+    background-color: #f1f1f1;
+    overflow-y: auto;
+    padding-top: 100px; /* 为顶部留出空间 */
+    padding-bottom: 60px; /* 为底部留出空间 */
+    box-sizing: border-box;
+}
+
+.tech-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tech-nav li {
+    position: relative;
+}
+
+.tech-nav a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.tech-nav a:hover {
+    background-color: #ddd;
+}
+
+.SideBarSubmenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    list-style-type: none;
+    padding: 0;
+    min-width: 150px;
+}
+
+.tech-nav li:hover > .submenu {
+    display: block;
+}

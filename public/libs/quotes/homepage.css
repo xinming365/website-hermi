@@ -1,0 +1,222 @@
+.lb-homepage {
+    width: 100%
+}
+
+.lb-homepage__banner {
+    width: 100%;
+    height: 500px
+}
+
+.lb-homepage__banner .layui-carousel-ind ul {
+    background: transparent
+}
+
+.lb-homepage__banner .layui-carousel-ind ul li {
+    width: 75px;
+    height: 6px;
+    border-radius: 3px;
+    background-size: 300% 100%;
+    background-position: 0 0;
+    background-color: transparent;
+    background-image: linear-gradient(90deg, #fff, #fff, #c6231d, #f5aa39);
+    transition: all 0.4s ease
+}
+
+.lb-homepage__banner .layui-carousel-ind ul li.layui-this {
+    background-position: 100% 0
+}
+
+.lb-homepage__banner_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px
+}
+
+.lb-homepage__section {
+    min-height: 100px;
+    background: #fff;
+    padding: 40px 0
+}
+
+.lb-homepage__section--gray {
+    background: #f6f6f6
+}
+
+.lb-homepage__title {
+    font-size: 32px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px
+}
+
+.lb-homepage__product {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap
+}
+
+.lb-homepage__product_item {
+    width: 220px;
+    height: 220px;
+    border-radius: 10px;
+    background: #f6f6f6;
+    margin-bottom: 24px;
+    border: 1px solid #f6f6f6;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all ease 0.3s
+}
+
+.lb-homepage__product_item:hover {
+    border-color: #c6231d
+}
+
+.lb-homepage__product_item:hover a {
+    color: #c6231d
+}
+
+.lb-homepage__product_item a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+.lb-homepage__product_item h3 {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 18px
+}
+
+.lb-homepage__newproduct {
+    width: 100%;
+    height: 50px;
+    background-color: #e9e9e9;
+    background-image: url("/static/img/homepage/newproduct-bg.png?v=605ac39b2b7a");
+    background-repeat: no-repeat;
+    background-position: right;
+    border-radius: 25px;
+    margin-top: 10px;
+    display: flex
+}
+
+.lb-homepage__newproduct_icon {
+    flex: 0 0 130px;
+    font-size: 20px;
+    color: #c6231d;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.lb-homepage__newproduct_icon i {
+    font-size: 26px;
+    margin-right: 5px
+}
+
+.lb-homepage__newproduct_icon b {
+    font-style: italic
+}
+
+.lb-homepage__newproduct_box {
+    width: 1260px;
+    overflow: hidden;
+    font-size: 16px;
+    position: relative
+}
+
+.lb-homepage__newproduct_box ul {
+    display: flex;
+    width: 99999px;
+    height: 100%;
+    align-items: center
+}
+
+.lb-homepage__newproduct_box li {
+    margin-right: 70px
+}
+
+.lb-homepage__newproduct_box a {
+    color: #333;
+    transition: all ease 0.3s
+}
+
+.lb-homepage__newproduct_box a:hover {
+    color: #c6231d;
+    text-decoration: underline
+}
+
+.lb-homepage__activity {
+    width: 100%;
+    height: 380px;
+    display: flex;
+    justify-content: space-between
+}
+
+.lb-homepage__activity_item {
+    width: 175px;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 30px;
+    background: #bbb;
+    position: relative
+}
+
+.lb-homepage__activity_item .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    opacity: 1;
+    text-align: center;
+    line-height: 380px
+}
+
+.lb-homepage__activity_item img {
+    width: 900px;
+    height: 380px
+}
+
+.lb-homepage__activity_item--active {
+    width: 900px
+}
+
+.lb-homepage__activity_item--active .mask {
+    opacity: 0
+}
+
+.lb-homepage__activity_item .layui-carousel>[carousel-item]>* {
+    background: #fbf1e8
+}
+
+.lb-homepage__activity_item .layui-carousel-ind {
+    text-align: left;
+    margin-left: 50px
+}
+
+.lb-homepage__activity_item .layui-carousel-ind ul {
+    background: transparent
+}
+
+.lb-homepage__activity_item .layui-carousel-ind ul li {
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.6);
+    transition: all 0.4s ease;
+    user-select: none;
+    margin: 0 5px
+}
+
+.lb-homepage__activity_item .layui-carousel-ind ul li.layui-this {
+    background: #fff
+}
+

@@ -1,0 +1,293 @@
+#content-area {
+    padding: 20px;
+}
+
+#content-area h1 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.company-info h2 {
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.company-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.company-info li {
+    margin-bottom: 10px;
+}
+
+.company-info strong {
+    display: inline-block;
+    width: 100px;
+    color: #666;
+}
+
+.contact-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* .section-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+} */
+
+.section-title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left;
+    /* border-bottom: 2px solid #0056b3; */
+    padding-bottom: 10px;
+}
+
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    /* background-color: #007bff; */
+    margin: 1rem auto 0;
+}
+
+.company-name {
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: #007bff;
+}
+
+.contact-item span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.contact-item strong {
+    font-weight: 600;
+    color: #007bff;
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.job-listings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.job-position {
+    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-position:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.job-position::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+    );
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+.job-position h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.job-position h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.job-position h3 {
+    color: #34495e;
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.job-position ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    /* list-style-type: none; 移除默认的列表样式 */
+    list-style-type: decimal; /* 使用数字列表 */
+    counter-reset: item; /* 重置计数器 */
+}
+
+.job-position li {
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 0.5rem; /* 为自定义的点留出空间 */
+}
+
+.job-position li::before {
+    /* content: '•'; */
+    /* content: counter(item) ". "; 使用计数器和点 */
+    content: ""; /* 移除自定义内容 */
+    counter-increment: item; /* 增加计数器 */
+    color: #3498db;
+    font-weight: bold;
+    position: absolute;
+    left: -1.5rem;
+}
+
+
+.resume-submission {
+    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.resume-submission:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.resume-submission::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+    );
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+.resume-submission h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.resume-submission h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.resume-submission p {
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.resume-submission a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.resume-submission a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+
+/* .resume-submission {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.resume-submission p {
+    margin: 5px 0;
+}
+
+.resume-submission a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.resume-submission a:hover {
+    text-decoration: underline;
+} */

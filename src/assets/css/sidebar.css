@@ -1,0 +1,94 @@
+
+
+.sidebar {
+    width: 250px;
+    position: relative;
+    left: 5rem;
+    top: 0;
+    bottom: 3.5rem;
+    float: left;
+    /* background-color: #f5f5f7; */
+    background-color: rgba(245, 245, 247, 0.8); /* 略微透明 */
+    backdrop-filter: blur(10px); /* 毛玻璃效果 */
+    -webkit-backdrop-filter: blur(10px);
+    overflow-y: auto;
+    overflow-x: visible;
+    overflow: visible;
+    padding-top: 30px; /* 为顶部留出空间 */
+    padding-bottom: 60px; /* 为底部留出空间 */
+    box-sizing: content-box;
+    /* z-index: 100; */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+}
+
+.tech-nav .has-submenu {
+    position: relative;
+    color: #1d1d1f; /* 苹果风格的深色文字 */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 16px; /* 更合适的内边距 */
+    margin: 2px 8px; /* 添加外边距 */
+    border-radius: 8px; /* 圆角 */
+    /* z-index: 101; */
+}
+
+.tech-nav .has-submenu > a:hover {
+    /* background-color: #e8e8ed; 悬停时的背景色 */
+    background-color: rgba(0, 0, 0, 0.08); /* 更细腻的悬停效果 */
+    /* transform: scale(1.01); 轻微放大效果 */
+}
+
+.sidebar h2 {
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    /* border-bottom: 2px solid #3498db; */
+    color: #2c3e50;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tech-nav .submenu {
+    display: none;
+    position: absolute;
+    /* background-color: #f9f9f9; */
+    left: 100%;  /* 将子菜单定位到父菜单的右侧 */
+    top: 0;       /* 与父菜单项对齐 */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    margin-left: 2px;
+    overflow-y: auto; /* 内容过多时可滚动 */
+
+    background-color: rgba(255, 255, 255, 0.95); /* 半透明背景 */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1); /* 细边框 */
+    padding: 8px 0; /* 添加内边距 */
+}
+
+.tech-nav .has-submenu > a::after {
+    content: '›'; /* 使用更现代的箭头符号 */
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s ease;
+    /* color: #86868b; 添加柔和的颜色 */
+    font-weight: 300; /* 使箭头看起来更轻盈 */
+    margin-right: 5px; /* 与右边界保持距离 */
+}
+
+.tech-nav .submenu li {
+    /* white-space: nowrap; */
+    padding: 8px 20px;
+    display: block;
+    color: #1d1d1f;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+ 
