@@ -124,7 +124,7 @@ const scrollToTop = () => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .app-container {
   display: flex;
   flex-direction: column;
