@@ -1,7 +1,14 @@
 <template>
   <div class="header">
-    <div class="header-register" @click="handleClick(1)">注册丨</div>
-    <div class="header-login" @click="handleClick(0)">登录</div>
+    <div v-if="isLogin">
+      <span style="margin: 0 5px">【{{ userInfo?.username }}】</span>
+      <span class="header-logout" @click="userStore.logout">退出登录</span>
+    </div>
+
+    <template v-else>
+      <div class="header-register" @click="handleClick(1)">注册丨</div>
+      <div class="header-login" @click="handleClick(0)">登录</div>
+    </template>
   </div>
   <!-- <el-dialog
     class="dialog"
@@ -22,8 +29,9 @@
 
   <el-dialog
     modal-class="my-dialog"
-    v-model="showDialog"
+    v-model="showLoginModal"
     :before-close="onBeforeClose"
+    width="800"
   >
     <div class="modal-wrap">
       <div class="modal-left">
@@ -42,20 +50,25 @@
 import RegisterForm from "./RegisterForm.vue";
 import LoginForm from "./LoginForm.vue";
 import { ref, computed } from "vue";
+import useUserStore from "@/store/modules/user";
+import { storeToRefs } from "pinia";
+//
+const userStore = useUserStore();
+const { showLoginModal, isLogin, userInfo } = storeToRefs(userStore);
 
+//
 const isRegisterDialog = ref(false);
-const showDialog = ref(false);
 const dialogTitle = computed(() => (isRegisterDialog.value ? "注册" : "登录"));
-const onBeforeClose = (done) => {
-  loginRef.value.onResetFileds();
+const onBeforeClose = async (done) => {
+  console.log("出发了close");
+  await loginRef.value.onResetFileds();
   done();
 };
 const handleClick = (status?: number) => {
   console.log(status);
   status ? (isRegisterDialog.value = true) : (isRegisterDialog.value = false);
   console.log("isRegisterDialog", isRegisterDialog.value);
-
-  showDialog.value = true;
+  showLoginModal.value = true;
 };
 
 // 提交
@@ -80,9 +93,13 @@ const handleSubmit = () => {
 }
 
 .header-register,
-.header-login {
+.header-login,
+.header-logout {
   /* margin-left: 20px; 添加按钮之间的间距 */
   cursor: pointer; /* 鼠标悬停时显示为手型 */
+  &:hover {
+    color: #f55;
+  }
 }
 
 /* .header-register:hover, .header-login:hover {

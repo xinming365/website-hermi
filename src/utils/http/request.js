@@ -1,5 +1,6 @@
 import axios from "axios";
 import { checkStatus } from "./checkSatus";
+import useUserStore from "@/store/modules/user";
 
 const http = axios.create({
   baseURL: "/api",
@@ -9,10 +10,13 @@ const http = axios.create({
 // 拦截请求
 http.interceptors.request.use(
   (config) => {
-    //   const token = localStorage.getItem('token')
-    //   // console.log("请求拦截token", token);
-    //   config.headers['Authorization'] = 'Bearer ' + token
-    //   // console.log("请求", config);
+    console.log("拦截请求", config);
+    const userStore = useUserStore();
+    const token = userStore.getToken;
+    console.log("请求拦截token", token);
+    config.headers["Authorization"] = token;
+    // config.headers['Authorization'] = 'Bearer ' + token
+    // console.log("请求", config);
     return config;
   },
   (error) => {

@@ -15,8 +15,11 @@ export const loginApi = (data) => {
   });
 };
 
-// 测试mock
-export const loginMockApi = () => {
+/**
+ *模拟登录mock接口
+ * @param  data {username:string,password:string}
+ */
+export const loginMockApi = (data) => {
   return http({
     method: "post",
     url: "/user/login",
@@ -24,5 +27,15 @@ export const loginMockApi = () => {
       username: "admin",
       password: "123456",
     },
+  });
+};
+
+/**
+ * 获取用户信息
+ */
+export const getUserInfoMockApi = () => {
+  return http({
+    method: "get",
+    url: "/user/info",
   });
 };

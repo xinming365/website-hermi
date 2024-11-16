@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- 表单 -->
-    <!--  -->
     <el-form
       ref="formRef"
       class="my-form"
@@ -39,16 +38,18 @@
 </template>
 
 <script setup>
+import useUserStore from "@/store/modules/user";
+import { ElNotification } from "element-plus";
 import { ref, computed } from "vue";
-
+const userStore = useUserStore();
 // 定义登录表单数据
 const formRef = ref();
 const loginForm = ref({
   phone: "",
   password: "",
 });
-const onResetFileds = () => {
-  formRef.value.resetFields();
+const onResetFileds = async () => {
+  await formRef.value.resetFields();
 };
 // 暴露登录表单数据
 defineExpose({
@@ -83,10 +84,20 @@ const isLogin = ref(false);
 const onLogin = () => {
   isLogin.value = true;
   try {
-    formRef.value.validate((valid) => {
+    formRef.value.validate(async (valid) => {
       if (valid) {
         // todo:登录逻辑
         console.log("验证通过");
+        const userInfo = await userStore.login(loginForm.value);
+        console.log("userinfo", userInfo);
+        if (userInfo) {
+          onResetFileds();
+          ElNotification({
+            title: "success",
+            message: `欢迎~~${userInfo.username}`,
+            duration: 3000,
+          });
+        }
       }
     });
   } catch (e) {
