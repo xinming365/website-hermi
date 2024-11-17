@@ -35,7 +35,7 @@
           class="goods-card"
           v-for="item in cartItems"
           :selected="item.isSelected"
-          :key="item.id"
+          :key="item.p_id"
           :goodInfo="item"
           @goodClick="handleClick"
           @goodDelete="handleDelete"
@@ -51,8 +51,8 @@
         <div class="detail-images" v-if="finalGoods.length">
           <img
             v-for="item in finalGoods"
-            :key="item.id"
-            :src="item.image"
+            :key="item.p_id"
+            :src="item.p_thumb"
             alt=""
           />
         </div>
@@ -82,64 +82,61 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch, onMounted } from "vue";
 import GoodCard from "./GoodCard.vue";
-const isSelectedAll = ref(false);
+import useCartStore from "@/store/modules/cart";
+
+const cartStore = useCartStore();
+//
+const cartItems = ref([]);
+const getCartList = async () => {
+  await cartStore.getCartData();
+  cartItems.value = cartStore.cartList;
+};
+onMounted(() => {
+  getCartList();
+});
 const total = computed(() => {
   return cartItems.value
     .filter((item) => item.isSelected)
     .reduce((total, item) => {
-      return total + item.price * item.count;
-    }, 0);
+      return total + item.price * item.p_num;
+    }, 0)
+    .toFixed(2);
 });
-
-const cartItems = ref([
-  {
-    id: 1,
-    isSelected: false,
-    name: "Nd:YAG激光线反射镜，UVFS，直径 12.7 mm，工作波长 349 nm-358 nm，背面磨砂",
-    price: 100,
-    count: 1,
-    type: "NPM05-355-HP",
-    image:
-      "https://www.lbtek.com/uploads/images/others/20240229/7adf9c2b3905ce50a56ce98ccf4d5a79.jpg",
-  },
-  {
-    id: 2,
-    isSelected: false,
-    name: "Nd:YAG激光线反射镜，UVFS，直径 12.7 mm，工作波长 349 nm-358 nm，背面磨砂",
-    price: 200,
-    count: 1,
-    type: "NPM05-355-HP",
-    image:
-      "https://www.lbtek.com/uploads/images/others/20240229/7adf9c2b3905ce50a56ce98ccf4d5a79.jpg",
-  },
-  {
-    id: 3,
-    isSelected: false,
-    name: "Nd:YAG激光线反射镜，UVFS，直径 12.7 mm，工作波长 349 nm-358 nm，背面磨砂",
-    price: 300,
-    count: 1,
-    type: "NPM05-355-HP",
-    image:
-      "https://www.lbtek.com/uploads/images/others/20240229/7adf9c2b3905ce50a56ce98ccf4d5a79.jpg",
-  },
-  {
-    id: 4, // id
-    isSelected: false, // 是否选中状态
-    name: "Nd:YAG激光线反射镜，UVFS，直径 12.7 mm，工作波长 349 nm-358 nm，背面磨砂", // 名称
-    price: 400, // 价格
-    count: 1, // 数量
-    type: "NPM05-355-HP", // 型号
-    image:
-      "https://www.lbtek.com/uploads/images/others/20240229/7adf9c2b3905ce50a56ce98ccf4d5a79.jpg",
-  },
-]);
-
 const finalGoods = computed(() => {
   return cartItems.value.filter((item) => item.isSelected);
 });
+// 商品操作
+// 商品点击跳转到详情页
+const handleClick = (id: number) => {
+  console.log("handleClick", id);
+};
+// 商品删除
+const handleDelete = (id: number) => {
+  const index = cartItems.value.findIndex((item) => item.id === id);
+  if (index > -1) {
+    cartItems.value.splice(index, 1);
+  }
+};
+const handleDeleteAll = () => {
+  cartItems.value = cartItems.value.filter((item) => !item.isSelected);
+};
+//选中
+const isSelectedAll = ref(false);
+const handleClickAll = () => {
+  isSelectedAll.value = !isSelectedAll.value;
+  cartItems.value.forEach((item) => {
+    item.isSelected = isSelectedAll.value;
+  });
+};
 
+const handleSelect = (id: number) => {
+  const item = cartItems.value.find((item) => item.id === id);
+  if (item) {
+    item.isSelected = !item.isSelected;
+  }
+};
 // 监听全部选中自动改变isSelectedAll
 watch(
   () => cartItems.value.map((item) => item.isSelected),
@@ -148,37 +145,6 @@ watch(
   },
   { deep: true }
 );
-// 商品操作
-// 1. 商品点击跳转到详情页
-const handleClick = (id: number) => {
-  console.log("handleClick", id);
-};
-// 2. 商品删除
-const handleDelete = (id: number) => {
-  const index = cartItems.value.findIndex((item) => item.id === id);
-  if (index > -1) {
-    cartItems.value.splice(index, 1);
-  }
-};
-// 3. 商品选择
-const handleSelect = (id: number) => {
-  const item = cartItems.value.find((item) => item.id === id);
-  if (item) {
-    item.isSelected = !item.isSelected;
-  }
-};
-
-// 全选
-const handleClickAll = () => {
-  isSelectedAll.value = !isSelectedAll.value;
-  cartItems.value.forEach((item) => {
-    item.isSelected = isSelectedAll.value;
-  });
-};
-// 批量删除
-const handleDeleteAll = () => {
-  cartItems.value = cartItems.value.filter((item) => !item.isSelected);
-};
 </script>
 <style scoped>
 .cart {

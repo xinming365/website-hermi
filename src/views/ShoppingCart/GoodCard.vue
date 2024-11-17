@@ -10,14 +10,14 @@
     </div>
 
     <div class="good-info">
-      <img class="good-image" :src="props.goodInfo.image" alt="" />
+      <img class="good-image" :src="props.goodInfo.p_thumb" alt="" />
       <div class="good-detail">
-        <div class="good-name">{{ props.goodInfo.name }}</div>
-        <div class="good-name">型号：{{ props.goodInfo.type }}</div>
+        <div class="good-name">{{ props.goodInfo.p_desc }}</div>
+        <div class="good-name">型号：{{ props.goodInfo.p_code }}</div>
       </div>
       <div class="good-price">￥{{ props.goodInfo.price }}</div>
       <div class="good-count">
-        <el-input-number v-model="props.goodInfo.count" />
+        <el-input-number v-model="props.goodInfo.p_num" :min="1" />
       </div>
       <el-button type="primary" text @click="goodDelete"> 删除 </el-button>
     </div>

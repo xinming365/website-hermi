@@ -17,7 +17,9 @@ import "/public/libs/quotes/icon_font.css";
 import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted } from "vue";
 import useUserStore from "./store/modules/user";
+import useCartStore from "./store/modules/cart";
 import { loginMockApi } from "./api/user";
+import { storeToRefs } from "pinia";
 const route = useRoute();
 const router = useRouter();
 const isShowSideBar = computed(() => {
@@ -43,6 +45,9 @@ const scrollToTop = () => {
     behavior: "smooth",
   });
 };
+
+//
+const { totalCount } = storeToRefs(useCartStore());
 </script>
 
 <template>
@@ -88,7 +93,9 @@ const scrollToTop = () => {
         >
           <div class="lb-toolbar__link" href="/cart.html">
             <i class="lb-toolbar__icon lb-icon-cart"></i>
-            <span id="cartNums" class="lb-toolbar__badge">12</span>
+            <span id="cartNums" class="lb-toolbar__badge">{{
+              totalCount
+            }}</span>
           </div>
         </div>
 
