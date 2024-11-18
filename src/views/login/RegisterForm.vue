@@ -210,12 +210,11 @@ const onRegister = () => {
   }
 };
 const validateCode = async () => {
-  // const res = await verfyCodeApi({
-  //   email: registerForm.value.phone,
-  //   code: registerForm.value.code,
-  // });
-  const res = true;
-  return res ? true : false;
+  const res = await verfyCodeApi({
+    email: registerForm.value.phone,
+    code: registerForm.value.code,
+  });
+  return res.success ? true : false;
 };
 /**
  *注册
@@ -227,11 +226,10 @@ const registUser = async (type = "email") => {
     password: registerForm.value.password,
   };
   params[type] = registerForm.value.phone;
-  // const res = await registerApi(params);
-  // console.log(res);
-  const res = true;
+  const res = await registerApi(params);
+  console.log(res);
   userStore.showLoginModal = false;
-  if (res) {
+  if (res.status) {
     ElMessageBox.confirm("注册成功，现在去登录吧?", "Confirm", {
       distinguishCancelAndClose: true,
       confirmButtonText: "去登录~",

@@ -1,4 +1,4 @@
-import { getUserInfoMockApi, loginMockApi } from "@/api/user";
+import { getUserInfoApi, loginApi } from "@/api/user";
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
@@ -27,8 +27,8 @@ const useUserStore = defineStore(
       userInfo.value = null;
     }
     // actions
-    async function login(userForm) {
-      const res = await loginMockApi(userForm);
+    async function login(userData) {
+      const res = await loginApi(userData);
       if (res.data.token) {
         const token = res.data.token;
         setToken(token);
@@ -36,7 +36,7 @@ const useUserStore = defineStore(
       }
     }
     async function fetchUserInfo() {
-      const res = await getUserInfoMockApi();
+      const res = await getUserInfoApi();
       return res.data;
     }
     async function afterLogin() {

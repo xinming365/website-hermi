@@ -14,7 +14,7 @@ http.interceptors.request.use(
     const userStore = useUserStore();
     const token = userStore.getToken;
     console.log("请求拦截token", token);
-    config.headers["Authorization"] = token;
+    config.headers["token"] = token;
     // config.headers['Authorization'] = 'Bearer ' + token
     // console.log("请求", config);
     return config;

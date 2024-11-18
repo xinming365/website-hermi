@@ -1,9 +1,10 @@
 import http from "@/utils/http/request";
 const USER = {
-  LOGIN: "/login",
+  LOGIN: "/auth/sign_in",
   REGIST: "/auth/sign_up",
   EAMIL: "/api/email/send-code",
   VERIFY: "/api/email/verify-code",
+  ME: "/users/me",
 };
 
 /**
@@ -35,6 +36,16 @@ export const loginMockApi = (data) => {
 
 /**
  * 获取用户信息
+ */
+export const getUserInfoApi = () => {
+  return http({
+    method: "get",
+    url: USER.ME,
+  });
+};
+
+/**
+ * 获取用户mock信息
  */
 export const getUserInfoMockApi = () => {
   return http({

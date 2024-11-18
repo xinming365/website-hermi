@@ -1,4 +1,5 @@
 import { ElMessage } from "element-plus";
+import useUserStore from "@/store/modules/user";
 
 export function checkStatus(status, errmsg) {
   // let errMessage: string = '';
@@ -11,9 +12,10 @@ export function checkStatus(status, errmsg) {
     // Jump to the login page if not logged in, and carry the path of the current page
     // Return to the current page after successful login. This step needs to be operated on the login page.
     case 401:
-      //   localStorage.removeItem("token"); //移除token
-      // errMessage = "未授权";
-      //   router.push('/login')
+      const userStore = useUserStore();
+      userStore.clearToken();
+      userStore.clearUserInfo();
+      userStore.showLoginModal = true;
       break;
     case 403:
       // errMessage = "403";

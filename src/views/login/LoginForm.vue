@@ -10,16 +10,16 @@
       :rules="loginRules"
     >
       <!-- 手机号表单项 -->
-      <el-form-item label="手机号" prop="phone" class="my-label">
+      <el-form-item label="账 号" prop="phone" class="my-label">
         <!-- 输入框 -->
         <el-input
           class="my-input"
           v-model="loginForm.phone"
-          placeholder="请输入手机号"
+          placeholder="请输入邮箱/手机号"
         ></el-input>
       </el-form-item>
       <!-- 密码表单项 -->
-      <el-form-item label="密码" prop="password" class="my-label">
+      <el-form-item label="密 码" prop="password" class="my-label">
         <!-- 密码输入框 -->
         <el-input
           class="my-input"
@@ -60,11 +60,12 @@ defineExpose({
 // 定义登录表单验证规则
 const validatePhone = (rule, value, callback) => {
   const phoneNumberRegex = /^1[3456789]\d{9}$/;
+  const regEmailRegex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
   if (!value) {
-    return callback(new Error("请输入手机号"));
+    return callback(new Error("请输入邮箱/手机号"));
   }
-  if (!phoneNumberRegex.test(value)) {
-    return callback(new Error("请输入正确的手机格式!"));
+  if (!phoneNumberRegex.test(value) && !regEmailRegex.test(value)) {
+    return callback(new Error("请输入正确的邮箱/手机格式"));
   } else {
     callback();
   }
@@ -74,7 +75,6 @@ const loginRules = ref({
     {
       required: true,
       validator: validatePhone,
-      message: "请输入手机号",
       trigger: "change",
     },
   ],
@@ -88,13 +88,16 @@ const onLogin = () => {
       if (valid) {
         // todo:登录逻辑
         console.log("验证通过");
-        const userInfo = await userStore.login(loginForm.value);
+        const userInfo = await userStore.login({
+          login: loginForm.value.phone,
+          password: loginForm.value.password,
+        });
         console.log("userinfo", userInfo);
         if (userInfo) {
           onResetFileds();
           ElNotification({
             title: "success",
-            message: `欢迎~~${userInfo.username}`,
+            message: `欢迎~~${userInfo.nickname}`,
             duration: 3000,
           });
         }

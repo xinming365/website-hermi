@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div v-if="isLogin">
-      <span style="margin: 0 5px">【{{ userInfo?.username }}】</span>
+      <span style="margin: 0 5px">【{{ userInfo?.nickname }}】</span>
       <span class="header-logout" @click="userStore.logout">退出登录</span>
     </div>
 
