@@ -35,8 +35,15 @@
   >
     <div class="modal-wrap">
       <div class="modal-left">
-        <div class="login-tit"><span>登 录</span></div>
-        <LoginForm ref="loginRef" />
+        <div class="login-tit">
+          <span>{{ dialogTitle }}</span>
+        </div>
+        <RegisterForm
+          v-if="isRegisterDialog"
+          ref="registerRef"
+          :toggleModal="handleClick"
+        />
+        <LoginForm v-else ref="loginRef" />
       </div>
       <div class="modal-right">
         <div class="modal-greet"></div>
@@ -58,10 +65,14 @@ const { showLoginModal, isLogin, userInfo } = storeToRefs(userStore);
 
 //
 const isRegisterDialog = ref(false);
-const dialogTitle = computed(() => (isRegisterDialog.value ? "注册" : "登录"));
+const dialogTitle = computed(() =>
+  isRegisterDialog.value ? "注 册" : "登 录"
+);
 const onBeforeClose = async (done) => {
   console.log("出发了close");
-  await loginRef.value.onResetFileds();
+  isRegisterDialog.value
+    ? await registerRef.value.onResetFileds()
+    : await loginRef.value.onResetFileds();
   done();
 };
 const handleClick = (status?: number) => {
@@ -74,12 +85,10 @@ const handleClick = (status?: number) => {
 // 提交
 const loginRef = ref(null);
 const registerRef = ref(null);
-const handleSubmit = () => {
-  const params = isRegisterDialog.value
-    ? registerRef.value.registerForm
-    : loginRef.value.loginForm;
-  console.log("表单数据", params);
-};
+
+window.addEventListener("beforeunload", (e) => {
+  userStore.showLoginModal = false;
+});
 </script>
 
 <style scoped lang="less">

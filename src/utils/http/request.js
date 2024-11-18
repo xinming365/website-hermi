@@ -27,7 +27,7 @@ http.interceptors.request.use(
 // 拦截响应
 http.interceptors.response.use(
   (response) => {
-    // // console.log("拦截响应", response);
+    console.log("拦截响应", response);
     // //刷新token
     // const newToken = response.headers['x-token']
     // // console.log("newToken", newToken);
@@ -35,8 +35,9 @@ http.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    console.log("响应错误", error);
     const status = error.response.status;
-    const errMsg = "";
+    const errMsg = error.response.data.message;
     checkStatus(status, errMsg);
     return Promise.reject(error);
   }

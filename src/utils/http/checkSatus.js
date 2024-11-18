@@ -1,5 +1,4 @@
-// import router from '@/router/index'
-// import { Modal } from 'ant-design-vue'
+import { ElMessage } from "element-plus";
 
 export function checkStatus(status, errmsg) {
   // let errMessage: string = '';
@@ -50,8 +49,8 @@ export function checkStatus(status, errmsg) {
     default:
       errMessage = "无网络";
   }
-  //   message.error({
-  //     type: 'error',
-  //     content: errMessage
-  //   })
+  ElMessage({
+    type: "error",
+    message: errMessage,
+  });
 }

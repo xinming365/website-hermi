@@ -108,42 +108,4 @@ const onLogin = () => {
 };
 </script>
 
-<style scoped lang="less">
-.my-form {
-  margin: 20px 0;
-  text-align: center;
-}
-.my-label {
-  width: 370px;
-  margin: 0 auto 30px;
-  border-bottom: 1px solid #eee;
-  padding: 5px;
-}
-
-.my-button {
-  width: 90%;
-  margin: 20px auto 20px;
-  height: 35px;
-  background: #c6231d;
-  color: #fff;
-  line-height: 35px;
-  cursor: pointer;
-  border-radius: 18px;
-  text-align: center;
-  outline: 0;
-  border: 0;
-  &:hover {
-    transition: 0.1s ease-out opacity;
-    opacity: 0.85;
-    background-color: #c6231d;
-    border: none;
-    color: #fff;
-    outline: none;
-  }
-}
-.my-input {
-  :deep(.el-input__wrapper) {
-    box-shadow: none;
-  }
-}
-</style>
+<style scoped lang="less"></style>

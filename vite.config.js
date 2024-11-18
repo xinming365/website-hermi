@@ -10,13 +10,13 @@ export default defineConfig((command) => {
     //
     server: {
       open: true,
-      // proxy: {
-      //   "/api": {
-      //     target: "http://localhost:3000",
-      //     changeOrigin: true,
-      //     rewrite: (path) => path.replace(/^\/api/, ""),
-      //   },
-      // },
+      proxy: {
+        "/api": {
+          target: "http://47.94.244.102:3000",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
     },
     //
     plugins: [
