@@ -41,3 +41,37 @@
         outline: none;
     }
 }
+
+.login-changePwd-back {
+    text-align: right;
+    padding-right: 20px;
+
+    a {
+        color: #999;
+        cursor: pointer;
+
+        &:hover {
+            color: #f55;
+        }
+    }
+}
+
+
+.enter-x {
+    z-index: 8;
+    opacity: 0;
+    animation: enter-x-animation .3s ease-in-out .3s;
+    animation-fill-mode: forwards;
+    animation-delay: 0s;
+}
+
+.enter-x:nth-child(2) {
+    transform: translate(30px);
+}
+
+@keyframes enter-x-animation {
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}

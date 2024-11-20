@@ -5,6 +5,7 @@ const USER = {
   EAMIL: "/api/email/send-code",
   VERIFY: "/api/email/verify-code",
   ME: "/users/me",
+  UPDATE: "/users/account",
 };
 
 /**
@@ -86,6 +87,14 @@ export const verfyCodeApi = (data) => {
   return http({
     url: USER.VERIFY,
     method: "post",
+    data,
+  });
+};
+
+export const changePwdApi = (data) => {
+  return http({
+    url: USER.UPDATE,
+    method: "PUT",
     data,
   });
 };

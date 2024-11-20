@@ -13,7 +13,7 @@ http.interceptors.request.use(
     console.log("拦截请求", config);
     const userStore = useUserStore();
     const token = userStore.getToken;
-    console.log("请求拦截token", token);
+    console.log("请求拦截token", userStore, token);
     config.headers["token"] = token;
     // config.headers['Authorization'] = 'Bearer ' + token
     // console.log("请求", config);

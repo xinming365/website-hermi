@@ -10,28 +10,14 @@
       <div class="header-login" @click="handleClick(0)">登录</div>
     </template>
   </div>
-  <!-- <el-dialog
-    class="dialog"
-    :close-on-click-modal="false"
-    :title="dialogTitle"
-    v-model="showDialog"
-    @closed="isRegisterDialog = false"
-    width="30%"
-  >
-    <RegisterForm ref="registerRef" v-if="isRegisterDialog" />
-    <LoginForm ref="loginRef" v-else />
-    <div class="dialog-footer">
-      <el-button type="primary" round @click="handleSubmit">{{
-        dialogTitle
-      }}</el-button>
-    </div>
-  </el-dialog> -->
 
+  <!-- dialog -->
   <el-dialog
     modal-class="my-dialog"
     v-model="showLoginModal"
     :before-close="onBeforeClose"
     width="800"
+    destroy-on-close
   >
     <div class="modal-wrap">
       <div class="modal-left">
@@ -65,9 +51,14 @@ const { showLoginModal, isLogin, userInfo } = storeToRefs(userStore);
 
 //
 const isRegisterDialog = ref(false);
-const dialogTitle = computed(() =>
-  isRegisterDialog.value ? "注 册" : "登 录"
-);
+const dialogTitle = computed(() => {
+  return isRegisterDialog.value
+    ? "注 册"
+    : loginRef.value?.isChangePwdState
+    ? "修改密码"
+    : "登 录";
+});
+
 const onBeforeClose = async (done) => {
   console.log("出发了close");
   isRegisterDialog.value

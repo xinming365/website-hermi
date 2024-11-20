@@ -114,7 +114,6 @@ const onResetFileds = async () => {
   await formRef.value.resetFields();
 };
 defineExpose({
-  registerForm,
   onResetFileds,
 });
 // 不为空校验

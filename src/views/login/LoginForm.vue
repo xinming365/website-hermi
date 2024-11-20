@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!isForget" class="enter-x">
     <!-- 表单 -->
     <el-form
       ref="formRef"
@@ -30,31 +30,41 @@
         ></el-input>
       </el-form-item>
       <!-- @click="handleSubmit" -->
+      <div class="login-changePwd-back" @click="isForget = true">
+        <a>忘记密码?</a>
+      </div>
       <el-button class="my-button" round :loading="isLogin" @click="onLogin"
         >登 录</el-button
       >
     </el-form>
   </div>
+
+  <ForgetPwd v-else v-model="isForget" ref="changePwdRef" />
 </template>
 
 <script setup>
 import useUserStore from "@/store/modules/user";
+import ForgetPwd from "./ForgetPwd.vue";
 import { ElNotification } from "element-plus";
 import { ref, computed } from "vue";
 const userStore = useUserStore();
 // 定义登录表单数据
 const formRef = ref();
+const changePwdRef = ref();
 const loginForm = ref({
   phone: "",
   password: "",
 });
 const onResetFileds = async () => {
-  await formRef.value.resetFields();
+  isForget.value
+    ? await changePwdRef.value.onResetFileds()
+    : await formRef.value.resetFields();
 };
+const isChangePwdState = computed(() => isForget.value);
 // 暴露登录表单数据
 defineExpose({
-  loginForm,
   onResetFileds,
+  isChangePwdState,
 });
 
 // 定义登录表单验证规则
@@ -109,6 +119,9 @@ const onLogin = () => {
     isLogin.value = false;
   }
 };
+
+// 切换忘记密码
+const isForget = ref(false);
 </script>
 
 <style scoped lang="less"></style>
