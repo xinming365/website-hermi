@@ -12,35 +12,42 @@
         class="my-input"
         v-model="forgetForm.email"
         placeholder="请输入邮箱/手机号"
+      >
+        <template #append>
+          <el-button
+            style="border: 1px solid #ccc"
+            @click="sendCode(forgetForm.email)"
+            :disabled="isSending"
+            >{{ buttonText }}</el-button
+          >
+        </template>
+      </el-input>
+    </el-form-item>
+    <!-- 手机验证码 -->
+    <el-form-item class="my-label" label="验证码" prop="code">
+      <el-input
+        class="my-input"
+        v-model.trim="forgetForm.code"
+        placeholder="请输入邮箱/手机验证码"
       ></el-input>
     </el-form-item>
-    <el-form-item label="原密码" prop="current_password" class="my-label">
+    <el-form-item label="新密码" prop="newPassword" class="my-label">
       <!-- 密码输入框 -->
       <el-input
         class="my-input"
         type="password"
         show-password
-        v-model="forgetForm.current_password"
-        placeholder="请输入原密码"
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="新密码" prop="password" class="my-label">
-      <!-- 密码输入框 -->
-      <el-input
-        class="my-input"
-        type="password"
-        show-password
-        v-model="forgetForm.password"
+        v-model="forgetForm.newPassword"
         placeholder="请输入新密码"
       ></el-input>
     </el-form-item>
-    <el-form-item label="确认密码" prop="passwordConfirmation" class="my-label">
+    <el-form-item label="确认密码" prop="confirmPassword" class="my-label">
       <!-- 密码输入框 -->
       <el-input
         class="my-input"
         type="password"
         show-password
-        v-model="forgetForm.passwordConfirmation"
+        v-model="forgetForm.confirmPassword"
         placeholder="请再次确认新密码"
       ></el-input>
     </el-form-item>
@@ -56,14 +63,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { changePwdApi } from "@/api/user";
+import { useSchema } from "@/hooks/useSchema";
+import { ElMessage } from "element-plus";
 const isForget = defineModel();
 
 const formRef = ref();
 const forgetForm = ref({
   email: "",
-  current_password: "",
-  password: "",
-  passwordConfirmation: "",
+  code: "",
+  newPassword: "",
+  confirmPassword: "",
 });
 const onResetFileds = async () => {
   await formRef.value.resetFields();
@@ -88,15 +97,14 @@ const validateUser = (rule, value, callback) => {
 };
 const forgetRules = {
   email: [{ required: true, trigger: "change", validator: validateUser }],
-  current_password: [
-    { required: true, trigger: "change", message: "请输入原密码" },
-  ],
-  password: [{ required: true, trigger: "change", message: "请输入新密码" }],
-  passwordConfirmation: [
+  code: [{ required: true, trigger: "change", message: "验证码不能为空" }],
+  newPassword: [{ required: true, trigger: "change", message: "请输入新密码" }],
+  confirmPassword: [
     { required: true, trigger: "change", message: "请再次确认新密码" },
   ],
 };
-
+// 验证码
+const { buttonText, sendCode, isSending } = useSchema();
 // 提交
 const isChanging = ref(false);
 const onChangePwd = () => {
@@ -105,16 +113,19 @@ const onChangePwd = () => {
     formRef.value.validate(async (valid) => {
       if (!valid) return;
       console.log("验证通过");
-      const res = await changePwdApi(forgetForm.value);
-      console.log(res);
-      if (res.status) {
-        elMessage.success("修改成功,去登陆吧~");
-        isForget.value = false;
-      }
+      resetPwd();
     });
   } catch (error) {
   } finally {
     isChanging.value = false;
+  }
+};
+const resetPwd = async () => {
+  const res = await changePwdApi(forgetForm.value);
+  console.log(res);
+  if (res.status) {
+    ElMessage.success("修改成功,去登陆吧~");
+    isForget.value = false;
   }
 };
 </script>

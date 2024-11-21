@@ -6,6 +6,7 @@ const USER = {
   VERIFY: "/api/email/verify-code",
   ME: "/users/me",
   UPDATE: "/users/account",
+  RESET_PWD: "/api/email/reset-password",
 };
 
 /**
@@ -93,8 +94,8 @@ export const verfyCodeApi = (data) => {
 
 export const changePwdApi = (data) => {
   return http({
-    url: USER.UPDATE,
-    method: "PUT",
+    url: USER.RESET_PWD,
+    method: "post",
     data,
   });
 };
