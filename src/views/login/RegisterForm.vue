@@ -8,7 +8,6 @@
     label-position="left"
     :rules="registerRules"
   >
-    <!-- 昵称 -->
     <el-form-item class="my-label" label="昵 称" prop="nickname">
       <el-input
         class="my-input"
@@ -16,7 +15,6 @@
         placeholder="请输入昵称"
       ></el-input>
     </el-form-item>
-    <!-- 手机号 -->
     <el-form-item class="my-label" label="账号" prop="phone">
       <el-input
         class="my-input"
@@ -33,7 +31,6 @@
         </template>
       </el-input>
     </el-form-item>
-    <!-- 手机验证码 -->
     <el-form-item class="my-label" label="验证码" prop="code">
       <el-input
         class="my-input"
@@ -41,7 +38,7 @@
         placeholder="请输入邮箱/手机验证码"
       ></el-input>
     </el-form-item>
-    <!-- 密码 -->
+
     <el-form-item class="my-label" label="密 码" prop="password">
       <el-input
         class="my-input"
@@ -51,7 +48,7 @@
         placeholder="请输入密码"
       ></el-input>
     </el-form-item>
-    <!-- 确认密码 -->
+
     <el-form-item class="my-label" label="确认密码" prop="submitPassword">
       <el-input
         class="my-input"
@@ -61,7 +58,7 @@
         placeholder="请再次确认密码"
       ></el-input>
     </el-form-item>
-    <!-- 邀请码 -->
+
     <el-form-item class="my-label" label="邀请码" prop="inviteCode">
       <el-input
         class="my-input"
@@ -69,7 +66,7 @@
         placeholder="请输入邀请码[选填]"
       ></el-input>
     </el-form-item>
-    <!-- 同意协议 -->
+
     <el-form-item>
       <input type="checkbox" v-model="registerForm.isAgree" />
       <div class="dialog-agree">
@@ -86,7 +83,7 @@
 
 <script setup>
 import { ElMessageBox } from "element-plus";
-import { ref, computed, onMounted } from "vue";
+import { ref } from "vue";
 import useUserStore from "@/store/modules/user";
 import { validateFn, getType } from "@/utils/validate/validate";
 import { sendEmailCodeApi, verfyCodeApi, registerApi } from "@/api/user";
@@ -154,7 +151,7 @@ const registerRules = ref({
     },
   ],
 });
-// 发送验证码
+// 验证码
 const countdown = ref(60);
 const isSending = ref(false);
 const buttonText = ref("发送验证码");
@@ -188,7 +185,7 @@ const sendCode = async () => {
   }
 };
 
-// 提交注册
+// 提交
 const isRegist = ref(false);
 const onRegister = () => {
   isRegist.value = true;
@@ -215,10 +212,8 @@ const validateCode = async () => {
   });
   return res.success ? true : false;
 };
-/**
- *注册
- * @param type  "email" || "phone"
- */
+
+//type  "email" || "phone"
 const registUser = async (type = "email") => {
   const params = {
     nickname: registerForm.value.nickname,

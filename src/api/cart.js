@@ -1,17 +1,15 @@
 import http from "@/utils/http/request";
 
 const CART = {
-  LIST: "/cart/list",
-  ADD: "/cart/add",
-  UPDATE: "/cart/update",
-  SELECT: "/cart/select",
-  DELETE: "/cart/delete",
-  DELETE_ALL: "/cart/deleteAll",
+  LIST: "/api/cart",
+  ADD: "/api/cart/add",
+  DELETE: "/api/cart/delete",
+  DELETE_PATCH: "/api/cart/delete_batch",
+  DELETE_ALL: "/api/cart/deleteAll",
+  PRICE_REPORT: "/api/cart/export-pdf",
+  SHOPPING_REPORT: "/api/cart/export",
 };
 
-/**
- * 获取购物车列表
- */
 export const getCartListApi = () => {
   return http({
     method: "get",
@@ -19,10 +17,6 @@ export const getCartListApi = () => {
   });
 };
 
-/**
- * 添加到购物车
- * @param data { sn,p_num }
- */
 export const addCartApi = (data) => {
   return http({
     url: CART.ADD,
@@ -31,48 +25,42 @@ export const addCartApi = (data) => {
   });
 };
 
-/**
- * 更新购物车商品数量
- * @param data { sku_id, quantity }
- */
-export const updateCartApi = (data) => {
-  return http({
-    url: CART.UPDATE,
-    method: "put",
-    data,
-  });
-};
-
-/**
- * 选择/取消选择购物车商品
- * @param data { selected, cartIds }
- */
-export const selectCartApi = (data) => {
-  return http({
-    url: CART.SELECT,
-    method: "put",
-    data,
-  });
-};
-
-/**
- * 删除购物车商品
- * @param data { cartId  }
- */
-export const deleteCartApi = (data) => {
+export const deleteCartApi = (cart_id) => {
   return http({
     url: CART.DELETE,
     method: "delete",
-    data,
+    data: { cartId: cart_id },
   });
 };
 
-/**
- * 清空购物车
- */
-export const deleteAllCartApi = () => {
+export const deletePatchApi = (data) => {
+  return http({
+    url: CART.DELETE_PATCH,
+    method: "delete",
+    data: { cartIds: data },
+  });
+};
+
+export const deleteAllApi = () => {
   return http({
     url: CART.DELETE_ALL,
     method: "delete",
+  });
+};
+
+export const createPriceReportApi = (data) => {
+  return http({
+    url: CART.PRICE_REPORT,
+    method: "post",
+    data,
+    responseType: "blob",
+  });
+};
+export const createShoppingReportApi = (data) => {
+  return http({
+    url: CART.SHOPPING_REPORT,
+    method: "post",
+    data,
+    responseType: "blob",
   });
 };

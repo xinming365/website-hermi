@@ -26,8 +26,17 @@
               text
               size="small"
               round
-              @click="handleDeleteAll"
+              @click="handlePatchDelete"
               >批量删除</el-button
+            >
+            <el-button type="danger" size="small" round @click="onDeleteAll"
+              >清空购物车</el-button
+            >
+            <el-button type="primary" size="small" round @click="onShowModal(0)"
+              >导出购物清单</el-button
+            >
+            <el-button type="primary" size="small" round @click="onShowModal(1)"
+              >导出报价单</el-button
             >
           </div>
         </div>
@@ -35,7 +44,7 @@
           class="goods-card"
           v-for="item in cartItems"
           :selected="item.isSelected"
-          :key="item.p_id"
+          :key="item.sku_id"
           :goodInfo="item"
           @goodClick="handleClick"
           @goodDelete="handleDelete"
@@ -51,9 +60,9 @@
         <div class="detail-images" v-if="finalGoods.length">
           <img
             v-for="item in finalGoods"
-            :key="item.p_id"
-            :src="item.p_thumb"
-            alt=""
+            :key="item.sku_id"
+            :src="item.main_image_url"
+            alt="产品缩略图"
           />
         </div>
         <el-empty
@@ -75,9 +84,59 @@
           <div class="total-text">合计:</div>
           <div class="total-price">&yen;{{ total }}</div>
         </div>
-        <el-button type="danger" class="button" round>结算</el-button>
+        <el-button type="danger" class="button" round @click="onBill"
+          >结算</el-button
+        >
       </div>
     </div>
+    <!--  -->
+    <el-dialog
+      v-model="modalVisible"
+      :title="modalTitle"
+      width="500"
+      :before-close="onBeforeClose"
+    >
+      <el-form
+        ref="formRef"
+        class="my-form"
+        :model="reportForm"
+        label-width="70px"
+        label-position="left"
+        :rules="reportRules"
+      >
+        <el-form-item label="邮 箱" prop="email">
+          <el-input
+            v-model="reportForm.email"
+            placeholder="请输入邮箱地址"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="手 机" prop="phone">
+          <el-input
+            v-model="reportForm.phone"
+            placeholder="请输入手机号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="姓 名" prop="name">
+          <el-input
+            v-model="reportForm.name"
+            placeholder="请输入联系人姓名"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="单 位" prop="unit">
+          <el-input
+            v-model="reportForm.unit"
+            placeholder="请输入单位"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <div style="text-align: center">
+        <el-button @click="onCancel">取消</el-button>
+        <el-button type="primary" @click="onReport" :loading="isLoading">
+          确定
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -85,6 +144,8 @@
 import { computed, reactive, ref, watch, onMounted } from "vue";
 import GoodCard from "./GoodCard.vue";
 import useCartStore from "@/store/modules/cart";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { validateFn } from "@/utils/validate/validate";
 
 const cartStore = useCartStore();
 //
@@ -100,7 +161,7 @@ const total = computed(() => {
   return cartItems.value
     .filter((item) => item.isSelected)
     .reduce((total, item) => {
-      return total + item.price * item.p_num;
+      return total + item.price * item.quantity;
     }, 0)
     .toFixed(2);
 });
@@ -113,14 +174,28 @@ const handleClick = (id: number) => {
   console.log("handleClick", id);
 };
 // 商品删除
-const handleDelete = (id: number) => {
-  const index = cartItems.value.findIndex((item) => item.id === id);
-  if (index > -1) {
-    cartItems.value.splice(index, 1);
+const handleDelete = async (cart_id: number) => {
+  await cartStore.deleteOne(cart_id);
+  getCartList();
+};
+const handlePatchDelete = async () => {
+  const selectedArr = finalGoods.value.map((cartItem) => cartItem.cart_id);
+  if (selectedArr.length) {
+    await ElMessageBox.confirm("确定删除这几个吗?", "Warning", {
+      confirmButtonText: "确定",
+      cancelButtonText: "不，再想想",
+      type: "warning",
+    }).then(async () => {
+      await cartStore.deletePatch(selectedArr);
+      getCartList();
+    });
+  } else {
+    ElMessage.warning("请选择要移除的商品");
   }
 };
-const handleDeleteAll = () => {
-  cartItems.value = cartItems.value.filter((item) => !item.isSelected);
+const onDeleteAll = async () => {
+  await cartStore.deleteAll();
+  getCartList();
 };
 //选中
 const isSelectedAll = ref(false);
@@ -132,7 +207,7 @@ const handleClickAll = () => {
 };
 
 const handleSelect = (id: number) => {
-  const item = cartItems.value.find((item) => item.id === id);
+  const item = cartItems.value.find((item) => item.sku_id === id);
   if (item) {
     item.isSelected = !item.isSelected;
   }
@@ -145,6 +220,108 @@ watch(
   },
   { deep: true }
 );
+
+//
+const modalVisible = ref(false);
+const isPriceTable = ref(false);
+const modalTitle = computed(() => {
+  return isPriceTable.value ? "导出报价单" : "导出购物清单";
+});
+const onResetFileds = async () => {
+  await formRef.value.resetFields();
+};
+const onBeforeClose = async (done) => {
+  await onResetFileds();
+  done();
+};
+const onShowModal = (status) => {
+  if (!cartIds.value.length) return ElMessage.error("请选中要导出的商品!");
+  console.log(status);
+  status ? (isPriceTable.value = true) : (isPriceTable.value = false);
+  console.log("isPriceTable", isPriceTable.value);
+  modalVisible.value = true;
+};
+
+const formRef = ref();
+const reportForm = ref({
+  phone: "",
+  name: "",
+  unit: "",
+  email: "",
+});
+const isLoading = ref(false);
+const validateEmail = (rule, value, callback) => {
+  if (!value) {
+    return callback(new Error("请输入邮箱"));
+  }
+  console.log("验证email", validateFn("email", value));
+  if (!validateFn("email", value)) {
+    return callback(new Error("请输入正确的邮箱格式"));
+  } else {
+    callback();
+  }
+};
+const validatePhone = (rule, value, callback) => {
+  if (!value) {
+    return callback(new Error("请输入手机号"));
+  }
+  if (!validateFn("phone", value)) {
+    return callback(new Error("请输入正确的手机号"));
+  } else {
+    callback();
+  }
+};
+const reportRules = ref({
+  phone: [
+    {
+      required: true,
+      validator: validatePhone,
+      trigger: "change",
+    },
+  ],
+  email: [
+    {
+      required: true,
+      validator: validateEmail,
+      trigger: "change",
+    },
+  ],
+});
+const cartIds = computed(() => {
+  return finalGoods.value.map((item) => item.cart_id);
+});
+const createReport = async () => {
+  const params = {
+    cartIds: cartIds.value,
+    ...reportForm.value,
+  };
+  isPriceTable.value
+    ? await cartStore.createPriceReport(params)
+    : await cartStore.createShoppingReport(params);
+};
+const onReport = () => {
+  isLoading.value = true;
+  try {
+    formRef.value.validate(async (valid) => {
+      if (!valid) return;
+      await createReport();
+      onCancel();
+    });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    isLoading.value = false;
+  }
+};
+const onCancel = () => {
+  modalVisible.value = false;
+  onResetFileds();
+};
+const onBill = () => {
+  if (!cartIds.value.length) return ElMessage.error("请选中要导出的商品!");
+  isPriceTable.value = true;
+  createReport();
+};
 </script>
 <style scoped>
 .cart {

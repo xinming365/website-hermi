@@ -5,7 +5,7 @@ import { ref, computed } from "vue";
 const useUserStore = defineStore(
   "userStore",
   () => {
-    //控制登录modal
+    //modal
     const showLoginModal = ref(false);
     const isLogin = computed(() => !!token.value);
     //token
@@ -26,7 +26,7 @@ const useUserStore = defineStore(
     function clearUserInfo() {
       userInfo.value = null;
     }
-    // actions
+
     async function login(userData) {
       const res = await loginApi(userData);
       if (res.data.token) {

@@ -1,6 +1,16 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { getCartListApi, addCartApi, updateCartApi, selectCartApi, deleteCartApi, deleteAllCartApi } from "@/api/cart";
+import {
+  getCartListApi,
+  deleteCartApi,
+  deleteAllApi,
+  deletePatchApi,
+  createPriceReportApi,
+  createShoppingReportApi,
+  addCartApi,
+} from "@/api/cart";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { createModalForDownload } from "@/utils/blob/blob";
 
 const useCartStore = defineStore(
   "cart",
@@ -9,55 +19,72 @@ const useCartStore = defineStore(
     const cartList = ref([]);
     async function getCartData() {
       const res = await getCartListApi();
+      console.log("获取购物车", res);
+      addPropsInData(res);
+      // cartList.value = res.data.items;
+    }
+    function addPropsInData(res) {
+      cartList.value = res.data.items.map((item) => {
+        item.isSelected = false;
+        return item;
+      });
+    }
+    async function addCart(sku_id, quantity) {
+      const res = await addCartApi({ sku_id, quantity });
+      if (res.status) {
+        ElMessage({
+          type: "success",
+          message: "添加成功",
+          showClose: true,
+          duration: 1000,
+        });
+      }
+    }
+    async function deleteOne(cart_id) {
+      const res = await deleteCartApi(cart_id);
       console.log(res);
-      cartList.value = res.data.list;
+      if (res.status) ElMessage.success("删除成功");
     }
-
-    // 添加到购物车
-    async function addCart(data) {
-      await addCartApi(data);
-      // 重新获取最新购物车数据
-      getCartData();
+    async function deletePatch(cartIds) {
+      const res = await deletePatchApi(cartIds);
+      console.log(res);
+      if (res.status) ElMessage.success("删除成功");
     }
-
-    // 更新购物车商品数量
-    async function updateCart(data) {
-      await updateCartApi(data);
-      getCartData();
+    async function deleteAll() {
+      await ElMessageBox.confirm("确定清空购物车吗?", "Warning", {
+        confirmButtonText: "确定",
+        cancelButtonText: "不，再想想",
+        type: "warning",
+      }).then(async () => {
+        const res = await deleteAllApi();
+        if (res.status) ElMessage.success("已全部移出!");
+      });
     }
-
-    // 选择/取消选择购物车商品
-    async function selectCart(data) {
-      await selectCartApi(data);
-      getCartData();
-    }
-
-    // 删除购物车商品
-    async function deleteCart(data) {
-      await deleteCartApi(data);
-      getCartData();
-    }
-
-    // 清空购物车
-    async function deleteAllCart() {
-      await deleteAllCartApi();
-      getCartData();
-    }
-
+    function updateBadge() {}
     //   getters
     const totalCount = computed(() =>
-      cartList.value.reduce((total, current) => total + current.p_num, 0)
+      cartList.value.reduce((total, current) => total + current.quantity, 0)
     );
+    async function createPriceReport(params) {
+      const res = await createPriceReportApi(params);
+      if (res) createModalForDownload(res, "pdf");
+    }
+    async function createShoppingReport(params) {
+      const res = await createShoppingReportApi(params);
+      if (res) createModalForDownload(res, "xlsx");
+    }
 
     return {
       cartList,
       totalCount,
       getCartData,
+      deleteOne,
+      deletePatch,
+      deleteAll,
+      updateBadge,
+      createPriceReport,
+      createShoppingReport,
       addCart,
-      updateCart,
-      selectCart,
-      deleteCart,
-      deleteAllCart,
     };
   },
   {

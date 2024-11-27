@@ -7,7 +7,7 @@ import { ElMessage } from "element-plus";
 import useCartStore from "@/store/modules/cart";
 
 // 模拟数据 !!!!!!!!!!!!
-import productDataJson from '@/assets/product_data.json' 
+import productDataJson from "@/assets/product_data.json";
 
 const props = defineProps({
   id: {
@@ -27,45 +27,45 @@ const fetchProductData = async () => {
     // 模拟数据
     const data = productDataJson;
 
-    console.log('获取到的原始数据:', data);  // 新增
+    console.log("获取到的原始数据:", data); // 新增
     if (!data.common_image_urls) {
-      console.warn('common_image_urls 不存在!');  // 新增
+      console.warn("common_image_urls 不存在!"); // 新增
     }
 
     productData.value = {
       ...data,
       tabs: [
         {
-          name: '参数规格',
+          name: "参数规格",
           content: {
             detail_desc: data.detail_desc,
             detail_points: data.detail_points,
             common_desc: data.common_desc,
             common_points: data.common_points,
-            generalParams: data.general_params
-          }
+            generalParams: data.general_params,
+          },
         },
         {
-          name: '曲线',
-          content: data.assembly?.content || ''
+          name: "曲线",
+          content: data.assembly?.content || "",
         },
         {
-          name: '技术说明',
-          content: data.tech_articles?.content || ''
+          name: "技术说明",
+          content: data.tech_articles?.content || "",
         },
         {
-          name: '组装',
-          content: data.assembly?.content || ''
+          name: "组装",
+          content: data.assembly?.content || "",
         },
         {
-          name: '应用案例',
-          content: data.application_articles?.content || ''
+          name: "应用案例",
+          content: data.application_articles?.content || "",
         },
         {
-          name: '定制能力',
-          content: data.customization?.content || ''
-        }
-      ]
+          name: "定制能力",
+          content: data.customization?.content || "",
+        },
+      ],
     };
   } catch (error) {
     console.error("获取产品数据失败:", error);
@@ -92,22 +92,12 @@ const handleTabClick = (index) => {
 
 //
 const cartStore = useCartStore();
-const onAddCart = async (e) => {
-  console.log("点击事件!!!!!!!!!!", e);
-  console.log(e.target);
-  const {  sn, p_num } = getParamsFromTrNode(e.target);
-  console.log("商品信息...", sn, p_num);
-  const res = await addCartApi({ sn, p_num });
-  console.log(res);
+const onAddCart = async (e, skuid) => {
+  console.log("点击事件!!!!!!!!!!", e.target, skuid);
+  const { p_num } = getParamsFromTrNode(e.target);
+  console.log("商品信息...", p_num);
+  await cartStore.addCart(skuid, p_num);
   await cartStore.getCartData();
-  if (res.code === 200) {
-    ElMessage({
-      type: "success",
-      message: "添加成功",
-      showClose: true,
-      duration: 1000,
-    });
-  }
 };
 /**
  * 获取接口参数从tr节点
@@ -148,7 +138,6 @@ function getParamsFromTrNode(currentNode) {
         </div>
       </div>
 
-      
       <!-- 内容区域 -->
       <div class="lb-product-tabs__content">
         <div
@@ -167,7 +156,10 @@ function getParamsFromTrNode(currentNode) {
                 <div class="lb-product-info__item_title">产品说明</div>
                 <div class="lb-product-info__explain">
                   <ul>
-                    <li v-for="(point, idx) in tab.content.detail_points" :key="idx">
+                    <li
+                      v-for="(point, idx) in tab.content.detail_points"
+                      :key="idx"
+                    >
                       {{ point }}
                     </li>
                   </ul>
@@ -179,12 +171,14 @@ function getParamsFromTrNode(currentNode) {
             <div class="lb-product-table">
               <div class="lb-product-info__item_title">通用参数</div>
               <table>
-                <tr v-for="(value, key) in tab.content.generalParams" :key="key">
+                <tr
+                  v-for="(value, key) in tab.content.generalParams"
+                  :key="key"
+                >
                   <td>
                     <div class="t">{{ key }}</div>
                     <div class="c">{{ value }}</div>
                   </td>
- 
                 </tr>
               </table>
             </div>
@@ -192,27 +186,42 @@ function getParamsFromTrNode(currentNode) {
 
           <!-- 曲线 -->
           <template v-else-if="index === 1">
-            <div class="lb-product-tabs__content_item--rich" v-html="tab.content"></div>
+            <div
+              class="lb-product-tabs__content_item--rich"
+              v-html="tab.content"
+            ></div>
           </template>
 
           <!-- 技术说明 -->
           <template v-else-if="index === 2">
-            <div class="lb-product-tabs__content_item--rich" v-html="tab.content"></div>
+            <div
+              class="lb-product-tabs__content_item--rich"
+              v-html="tab.content"
+            ></div>
           </template>
 
           <!-- 组装 -->
           <template v-else-if="index === 3">
-            <div class="lb-product-tabs__content_item--rich" v-html="tab.content"></div>
+            <div
+              class="lb-product-tabs__content_item--rich"
+              v-html="tab.content"
+            ></div>
           </template>
 
           <!-- 应用案例 -->
           <template v-else-if="index === 4">
-            <div class="lb-product-tabs__content_item--rich" v-html="tab.content"></div>
+            <div
+              class="lb-product-tabs__content_item--rich"
+              v-html="tab.content"
+            ></div>
           </template>
 
           <!-- 定制能力 -->
           <template v-else-if="index === 5">
-            <div class="lb-product-tabs__content_item--rich" v-html="tab.content"></div>
+            <div
+              class="lb-product-tabs__content_item--rich"
+              v-html="tab.content"
+            ></div>
           </template>
         </div>
       </div>
@@ -227,12 +236,22 @@ function getParamsFromTrNode(currentNode) {
               class="lb-product-set__info_img enlarge"
               :data-img="productData.common_image_urls[0].url"
             >
-              <img :src="productData.common_image_urls[0].url"
+              <img
+                :src="productData.common_image_urls[0].url"
                 @error="(e) => console.error('图片加载失败:', e.target.src)"
-                @load="() => console.log('图片加载成功:', productData.common_image_urls[0].url)"
+                @load="
+                  () =>
+                    console.log(
+                      '图片加载成功:',
+                      productData.common_image_urls[0].url
+                    )
+                "
               />
             </div>
-            <div class="lb-product-set__info_annotate" v-if="productData.common_image_urls[0].caption">
+            <div
+              class="lb-product-set__info_annotate"
+              v-if="productData.common_image_urls[0].caption"
+            >
               {{ productData.common_image_urls[0].caption }}
             </div>
           </div>
@@ -253,7 +272,10 @@ function getParamsFromTrNode(currentNode) {
             >
               <img :src="productData.common_image_urls[1].url" />
             </div>
-            <div class="lb-product-set__info_annotate" v-if="productData.common_image_urls[1].caption">
+            <div
+              class="lb-product-set__info_annotate"
+              v-if="productData.common_image_urls[1].caption"
+            >
               {{ productData.common_image_urls[1].caption }}
             </div>
           </div>
@@ -264,8 +286,11 @@ function getParamsFromTrNode(currentNode) {
             <thead>
               <tr>
                 <th class="center" width="30px"></th>
-                <th v-for="(key, index) in Object.keys(productData.sku_set[0])" :key="index">
-                  {{ key === 'sku_id' ? '产品型号' : key }}
+                <th
+                  v-for="(key, index) in Object.keys(productData.sku_set[0])"
+                  :key="index"
+                >
+                  {{ key === "sku_id" ? "产品型号" : key }}
                 </th>
                 <th class="center" width="50px">对比</th>
                 <th width="70px"></th>
@@ -291,10 +316,14 @@ function getParamsFromTrNode(currentNode) {
                 </td>
                 <td class="center">
                   <div class="layui-form">
-                    <input type="checkbox" name="compareProduct" lay-filter="compareProduct" />
+                    <input
+                      type="checkbox"
+                      name="compareProduct"
+                      lay-filter="compareProduct"
+                    />
                   </div>
                 </td>
-  
+
                 <td>
                   <div class="layui-form" name="goods-num-wrapper">
                     <input
@@ -309,7 +338,11 @@ function getParamsFromTrNode(currentNode) {
                   </div>
                 </td>
                 <td class="center">
-                  <span class="lb-addcart" @click="onAddCart($event)">加入购物车</span>
+                  <span
+                    class="lb-addcart"
+                    @click="onAddCart($event, item.sku_id)"
+                    >加入购物车</span
+                  >
                 </td>
               </tr>
             </tbody>

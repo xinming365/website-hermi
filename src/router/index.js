@@ -13,8 +13,7 @@ const router = createRouter({
   routes,
 });
 
-// 全局路由守卫
 // router.beforeEach((to, from, next) => {
-//   console.log("我是全局路由守卫");
+//   console.log("路由守卫");
 // });
 export default router;

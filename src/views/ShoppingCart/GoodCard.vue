@@ -10,16 +10,24 @@
     </div>
 
     <div class="good-info">
-      <img class="good-image" :src="props.goodInfo.p_thumb" alt="" />
+      <img class="good-image" :src="goodInfo.main_image_url" alt="" />
       <div class="good-detail">
-        <div class="good-name">{{ props.goodInfo.p_desc }}</div>
-        <div class="good-name">型号：{{ props.goodInfo.p_code }}</div>
+        <div class="good-name">
+          {{ goodInfo.title }}{{ goodInfo.sku_params.input_spot }}
+          {{ goodInfo.sku_params.output_spot }}
+          {{ goodInfo.sku_params.wavelength }}
+        </div>
+        <div class="good-name">型号：{{ goodInfo.sku_id }}</div>
       </div>
-      <div class="good-price">￥{{ props.goodInfo.price }}</div>
+      <div class="good-price">￥{{ goodInfo.price }}</div>
       <div class="good-count">
-        <el-input-number v-model="props.goodInfo.p_num" :min="1" />
+        <el-input-number v-model="goodInfo.quantity" :min="1" />
       </div>
-      <el-button type="primary" text @click="goodDelete"> 删除 </el-button>
+      <el-popconfirm title="确定将该商品移出购物车?" @confirm="goodDelete">
+        <template #reference>
+          <el-button class="delbtn" type="primary" text> 删除 </el-button>
+        </template>
+      </el-popconfirm>
     </div>
   </div>
 </template>
@@ -44,13 +52,13 @@ const emit = defineEmits([
   "goodCountChange",
 ]);
 const goodClick = () => {
-  emit("goodClick", props.goodInfo.id);
+  emit("goodClick", props.goodInfo.sku_id);
 };
 const goodSelect = () => {
-  emit("goodSelect", props.goodInfo.id);
+  emit("goodSelect", props.goodInfo.sku_id);
 };
 const goodDelete = () => {
-  emit("goodDelete", props.goodInfo.id);
+  emit("goodDelete", props.goodInfo.cart_id);
 };
 </script>
 <style scoped>
@@ -88,12 +96,17 @@ const goodDelete = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  width: 600px;
   height: 96px;
 }
 .good-price {
+  width: 170px;
+  text-align: center;
   font-weight: bolder;
   color: rgb(122, 122, 122);
-  margin-left: 84px;
-  margin-right: 34px;
+}
+.delbtn {
+  color: #f55;
+  margin-left: 10px;
 }
 </style>

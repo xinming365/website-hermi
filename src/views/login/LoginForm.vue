@@ -47,7 +47,10 @@ import useUserStore from "@/store/modules/user";
 import ForgetPwd from "./ForgetPwd.vue";
 import { ElNotification } from "element-plus";
 import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 const userStore = useUserStore();
+const router = useRouter();
+
 // 定义登录表单数据
 const formRef = ref();
 const changePwdRef = ref();
@@ -105,6 +108,7 @@ const onLogin = () => {
         console.log("userinfo", userInfo);
         if (userInfo) {
           onResetFileds();
+          router.go(0);
           ElNotification({
             title: "success",
             message: `欢迎~~${userInfo.nickname}`,

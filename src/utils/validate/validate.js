@@ -1,7 +1,6 @@
 /**
  * 校验手机号或者邮箱
- * @param {string} type "phone" || "email"
- * @param {string} value 手机号/邮箱
+ type: "phone" || "email"
  */
 export const validateFn = (type, value) => {
   if (type === "phone") {

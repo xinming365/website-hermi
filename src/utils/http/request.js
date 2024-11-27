@@ -7,7 +7,6 @@ const http = axios.create({
   timeout: 5000,
 });
 
-// 拦截请求
 http.interceptors.request.use(
   (config) => {
     console.log("拦截请求", config);
@@ -24,7 +23,6 @@ http.interceptors.request.use(
   }
 );
 
-// 拦截响应
 http.interceptors.response.use(
   (response) => {
     console.log("拦截响应", response);

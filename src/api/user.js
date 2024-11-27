@@ -9,10 +9,6 @@ const USER = {
   RESET_PWD: "/api/email/reset-password",
 };
 
-/**
- *登录接口
- * @param data
- */
 export const loginApi = (data) => {
   return http({
     method: "post",
@@ -21,10 +17,6 @@ export const loginApi = (data) => {
   });
 };
 
-/**
- *模拟登录mock接口
- * @param  data {username:string,password:string}
- */
 export const loginMockApi = (data) => {
   return http({
     method: "post",
@@ -36,9 +28,6 @@ export const loginMockApi = (data) => {
   });
 };
 
-/**
- * 获取用户信息
- */
 export const getUserInfoApi = () => {
   return http({
     method: "get",
@@ -46,9 +35,6 @@ export const getUserInfoApi = () => {
   });
 };
 
-/**
- * 获取用户mock信息
- */
 export const getUserInfoMockApi = () => {
   return http({
     method: "get",
@@ -56,10 +42,6 @@ export const getUserInfoMockApi = () => {
   });
 };
 
-/**
- * 注册接口
- * @param {*} data
- */
 export const registerApi = (data) => {
   return http({
     method: "post",
@@ -68,10 +50,6 @@ export const registerApi = (data) => {
   });
 };
 
-/**
- * 发送email验证码
- * @param {*} data {email:string}
- */
 export const sendEmailCodeApi = (data) => {
   return http({
     method: "post",
@@ -80,10 +58,6 @@ export const sendEmailCodeApi = (data) => {
   });
 };
 
-/**
- * 验证验证码
- * @param {*} data {email:String code:String}
- */
 export const verfyCodeApi = (data) => {
   return http({
     url: USER.VERIFY,
