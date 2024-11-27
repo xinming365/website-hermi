@@ -48,13 +48,14 @@ const scrollToTop = () => {
 
 //
 const { totalCount } = storeToRefs(useCartStore());
+const userStore = useUserStore();
 </script>
 
 <template>
   <div class="app-container">
     <Login />
     <NavBar class="navbar" />
-    
+
     <div class="main-layout">
       <!-- 侧边栏 -->
       <aside class="sidebar-wrapper" v-if="isShowSideBar">
@@ -71,15 +72,26 @@ const { totalCount } = storeToRefs(useCartStore());
     <div class="lb-toolbar">
       <div id="toolbarMain">
         <!-- 在线咨询 -->
-        <div class="lb-toolbar__item" title="在线咨询" @click="toolbarHandler.contactService()">
+        <div
+          class="lb-toolbar__item"
+          title="在线咨询"
+          @click="toolbarHandler.contactService()"
+        >
           <i class="lb-toolbar__icon lb-icon-kefu"></i>
         </div>
 
         <!-- 购物车 -->
-        <div class="lb-toolbar__item" title="购物车" id="cartAnimationEnd" @click="handleJump('/cart')">
+        <div
+          class="lb-toolbar__item"
+          title="购物车"
+          id="cartAnimationEnd"
+          @click="handleJump('/cart')"
+        >
           <div class="lb-toolbar__link">
             <i class="lb-toolbar__icon lb-icon-cart"></i>
-            <span class="lb-toolbar__badge">{{ totalCount }}</span>
+            <span v-if="userStore.isLogin" class="lb-toolbar__badge">{{
+              totalCount
+            }}</span>
           </div>
         </div>
 
@@ -91,7 +103,12 @@ const { totalCount } = storeToRefs(useCartStore());
         </div>
 
         <!-- 返回顶部 -->
-        <div class="lb-toolbar__item" title="返回顶部" id="backTop" @click="scrollToTop">
+        <div
+          class="lb-toolbar__item"
+          title="返回顶部"
+          id="backTop"
+          @click="scrollToTop"
+        >
           <i class="lb-toolbar__icon lb-icon-backtop"></i>
         </div>
       </div>
@@ -108,7 +125,6 @@ const { totalCount } = storeToRefs(useCartStore());
   flex-direction: column;
   background-color: #f5f7fa;
   position: relative;
- 
 }
 
 .navbar {
@@ -116,7 +132,7 @@ const { totalCount } = storeToRefs(useCartStore());
   top: 0;
   z-index: 100;
   background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .main-layout {
@@ -128,12 +144,12 @@ const { totalCount } = storeToRefs(useCartStore());
   width: 100%;
   position: relative;
   justify-content: center;
-  
+
   @media (max-width: 1024px) {
     padding: 0 16px;
     gap: 16px;
   }
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 0 12px;
@@ -151,11 +167,11 @@ const { totalCount } = storeToRefs(useCartStore());
   overflow-y: visible; /* 改为 visible，允许子菜单溢出 */
   z-index: 1;
   margin-right: 0;
-  
+
   @media (max-width: 1024px) {
     width: 200px;
   }
-  
+
   @media (max-width: 768px) {
     width: 100%;
     position: static;
@@ -170,12 +186,12 @@ const { totalCount } = storeToRefs(useCartStore());
   background: white;
   border-radius: 12px;
 
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
   z-index: 0;
   // max-width: calc(100% - 264px);
   max-width: 1500px;
-  
+
   @media (max-width: 768px) {
     padding: 16px;
     max-width: 100%;
@@ -188,7 +204,7 @@ const { totalCount } = storeToRefs(useCartStore());
   right: 24px;
   bottom: 24px;
   z-index: 99;
-  
+
   .lb-toolbar__item {
     background: white;
     border-radius: 50%;
@@ -199,19 +215,19 @@ const { totalCount } = storeToRefs(useCartStore());
     justify-content: center;
     margin-bottom: 12px;
     cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    
+
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     }
-    
+
     .lb-toolbar__icon {
       font-size: 24px;
       color: #666;
     }
-    
+
     .lb-toolbar__badge {
       position: absolute;
       top: -2px;
@@ -228,15 +244,15 @@ const { totalCount } = storeToRefs(useCartStore());
       justify-content: center;
     }
   }
-  
+
   @media (max-width: 768px) {
     right: 16px;
     bottom: 16px;
-    
+
     .lb-toolbar__item {
       width: 40px;
       height: 40px;
-      
+
       .lb-toolbar__icon {
         font-size: 20px;
       }

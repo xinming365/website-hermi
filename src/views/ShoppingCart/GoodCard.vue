@@ -13,15 +13,18 @@
       <img class="good-image" :src="goodInfo.main_image_url" alt="" />
       <div class="good-detail">
         <div class="good-name">
-          {{ goodInfo.title }}{{ goodInfo.sku_params.input_spot }}
-          {{ goodInfo.sku_params.output_spot }}
-          {{ goodInfo.sku_params.wavelength }}
+          {{ goodInfo.title }}
+          <span v-for="(v, k) in goodInfo.sku_params" :key="k">{{ v }}</span>
         </div>
         <div class="good-name">型号：{{ goodInfo.sku_id }}</div>
       </div>
       <div class="good-price">￥{{ goodInfo.price }}</div>
       <div class="good-count">
-        <el-input-number v-model="goodInfo.quantity" :min="1" />
+        <el-input-number
+          v-model="goodInfo.quantity"
+          :min="1"
+          @change="goodsChange"
+        />
       </div>
       <el-popconfirm title="确定将该商品移出购物车?" @confirm="goodDelete">
         <template #reference>
@@ -59,6 +62,9 @@ const goodSelect = () => {
 };
 const goodDelete = () => {
   emit("goodDelete", props.goodInfo.cart_id);
+};
+const goodsChange = (value) => {
+  emit("goodCountChange", props.goodInfo.sku_id, value);
 };
 </script>
 <style scoped>

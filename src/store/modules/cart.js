@@ -8,6 +8,7 @@ import {
   createPriceReportApi,
   createShoppingReportApi,
   addCartApi,
+  updateCartApi,
 } from "@/api/cart";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createModalForDownload } from "@/utils/blob/blob";
@@ -18,10 +19,15 @@ const useCartStore = defineStore(
     //state
     const cartList = ref([]);
     async function getCartData() {
-      const res = await getCartListApi();
-      console.log("获取购物车", res);
-      addPropsInData(res);
-      // cartList.value = res.data.items;
+      try {
+        const res = await getCartListApi();
+        console.log("获取购物车", res);
+        addPropsInData(res);
+        cartList.value = res.data.items;
+      } catch (error) {
+        console.log("errorer", error);
+        error.response.status === 401 && ElMessage.error("请先登录");
+      }
     }
     function addPropsInData(res) {
       cartList.value = res.data.items.map((item) => {
@@ -39,6 +45,9 @@ const useCartStore = defineStore(
           duration: 1000,
         });
       }
+    }
+    async function updateCart(sku_id, quantity) {
+      await updateCartApi({ sku_id, quantity });
     }
     async function deleteOne(cart_id) {
       const res = await deleteCartApi(cart_id);
@@ -60,7 +69,6 @@ const useCartStore = defineStore(
         if (res.status) ElMessage.success("已全部移出!");
       });
     }
-    function updateBadge() {}
     //   getters
     const totalCount = computed(() =>
       cartList.value.reduce((total, current) => total + current.quantity, 0)
@@ -81,10 +89,10 @@ const useCartStore = defineStore(
       deleteOne,
       deletePatch,
       deleteAll,
-      updateBadge,
       createPriceReport,
       createShoppingReport,
       addCart,
+      updateCart,
     };
   },
   {

@@ -1,6 +1,6 @@
 import http from "@/utils/http/request";
 
-const CART = {
+export const CART = {
   LIST: "/api/cart",
   ADD: "/api/cart/add",
   DELETE: "/api/cart/delete",
@@ -8,6 +8,7 @@ const CART = {
   DELETE_ALL: "/api/cart/deleteAll",
   PRICE_REPORT: "/api/cart/export-pdf",
   SHOPPING_REPORT: "/api/cart/export",
+  UPDATE: "/api/cart/update",
 };
 
 export const getCartListApi = () => {
@@ -62,5 +63,13 @@ export const createShoppingReportApi = (data) => {
     method: "post",
     data,
     responseType: "blob",
+  });
+};
+
+export const updateCartApi = (data) => {
+  return http({
+    url: CART.UPDATE,
+    method: "put",
+    data,
   });
 };

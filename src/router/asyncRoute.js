@@ -21,17 +21,17 @@ export const dynamicRoutes = [
     path: "/product_center/:id",
     name: "product-detail",
     component: () => import("../views/ProductDetail.vue"),
-    beforeEnter: (to, from, next) => {
-      if (!to.query.tid) {
-        next({
-          name: "product-list",
-          params: { id: to.params.id },
-          query: { sid: to.query.sid },
-        });
-      } else {
-        next();
-      }
-    },
+    // beforeEnter: (to, from, next) => {
+    //   if (!to.query.tid) {
+    //     next({
+    //       name: "product-list",
+    //       params: { id: to.params.id },
+    //       query: { sid: to.query.sid },
+    //     });
+    //   } else {
+    //     next();
+    //   }
+    // },
     props: (route) => ({
       id: route.params.id,
       sid: route.query.sid,

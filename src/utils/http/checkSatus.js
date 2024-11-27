@@ -1,7 +1,9 @@
 import { ElMessage } from "element-plus";
 import useUserStore from "@/store/modules/user";
+import router from "@/router";
+import { CART } from "@/api/cart";
 
-export function checkStatus(status, errmsg) {
+export function checkStatus(status, errmsg, error) {
   // let errMessage: string = '';
   let errMessage = `${errmsg}`;
   switch (status) {
@@ -13,6 +15,9 @@ export function checkStatus(status, errmsg) {
     // Return to the current page after successful login. This step needs to be operated on the login page.
     case 401:
       const userStore = useUserStore();
+      if (error.response.config.url === CART.LIST) {
+        return (userStore.showLoginModal = true);
+      }
       userStore.clearToken();
       userStore.clearUserInfo();
       userStore.showLoginModal = true;
@@ -54,5 +59,7 @@ export function checkStatus(status, errmsg) {
   ElMessage({
     type: "error",
     message: errMessage,
+    showClose: true,
+    duration: 1000,
   });
 }

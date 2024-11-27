@@ -1,6 +1,7 @@
 import axios from "axios";
 import { checkStatus } from "./checkSatus";
 import useUserStore from "@/store/modules/user";
+import { CART } from "@/api/cart";
 
 const http = axios.create({
   baseURL: "/api",
@@ -36,7 +37,7 @@ http.interceptors.response.use(
     console.log("响应错误", error);
     const status = error.response.status;
     const errMsg = error.response.data.message;
-    checkStatus(status, errMsg);
+    checkStatus(status, errMsg, error);
     return Promise.reject(error);
   }
 );

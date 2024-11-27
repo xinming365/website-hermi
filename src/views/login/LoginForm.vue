@@ -30,8 +30,9 @@
         ></el-input>
       </el-form-item>
       <!-- @click="handleSubmit" -->
-      <div class="login-changePwd-back" @click="isForget = true">
-        <a>忘记密码?</a>
+      <div class="login-changePwd-back">
+        <a style="margin-right: 10px" @click="goRegist">去注册</a>
+        <a @click="isForget = true">忘记密码?</a>
       </div>
       <el-button class="my-button" round :loading="isLogin" @click="onLogin"
         >登 录</el-button
@@ -50,7 +51,9 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 const userStore = useUserStore();
 const router = useRouter();
-
+const props = defineProps({
+  toggleModal: Function,
+});
 // 定义登录表单数据
 const formRef = ref();
 const changePwdRef = ref();
@@ -126,6 +129,11 @@ const onLogin = () => {
 
 // 切换忘记密码
 const isForget = ref(false);
+
+const goRegist = () => {
+  onResetFileds();
+  props.toggleModal(1);
+};
 </script>
 
 <style scoped lang="less"></style>

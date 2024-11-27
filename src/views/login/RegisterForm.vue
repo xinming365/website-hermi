@@ -8,13 +8,6 @@
     label-position="left"
     :rules="registerRules"
   >
-    <el-form-item class="my-label" label="昵 称" prop="nickname">
-      <el-input
-        class="my-input"
-        v-model="registerForm.nickname"
-        placeholder="请输入昵称"
-      ></el-input>
-    </el-form-item>
     <el-form-item class="my-label" label="账号" prop="phone">
       <el-input
         class="my-input"
@@ -30,6 +23,13 @@
           >
         </template>
       </el-input>
+    </el-form-item>
+    <el-form-item class="my-label" label="昵 称" prop="nickname">
+      <el-input
+        class="my-input"
+        v-model="registerForm.nickname"
+        placeholder="请输入昵称"
+      ></el-input>
     </el-form-item>
     <el-form-item class="my-label" label="验证码" prop="code">
       <el-input
@@ -127,7 +127,7 @@ const validatePhone = (rule, value, callback) => {
   }
 };
 const registerRules = ref({
-  nickname: [{ required: true, message: "请输入昵称", trigger: "change" }],
+  // nickname: [{ required: true, message: "请输入昵称", trigger: "change" }],
   phone: [
     {
       required: true,

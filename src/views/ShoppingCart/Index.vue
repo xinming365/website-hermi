@@ -49,6 +49,7 @@
           @goodClick="handleClick"
           @goodDelete="handleDelete"
           @goodSelect="handleSelect"
+          @goodCountChange="handleGoodsChange"
         />
       </div>
       <!-- 结算明细卡片 -->
@@ -221,6 +222,11 @@ watch(
   { deep: true }
 );
 
+const handleGoodsChange = async (skuid, count) => {
+  console.log(skuid, count);
+  await cartStore.updateCart(skuid, count);
+};
+
 //
 const modalVisible = ref(false);
 const isPriceTable = ref(false);
@@ -323,7 +329,7 @@ const onBill = () => {
   createReport();
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 .cart {
   width: 100%;
   padding: 20px;
@@ -344,7 +350,7 @@ const onBill = () => {
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  right: 80px;
+  right: 100px;
   width: 268px;
   padding: 20px;
 }
@@ -353,8 +359,36 @@ const onBill = () => {
   align-items: center;
   justify-content: space-between;
 }
-.detail-iamges {
+.detail-images {
   display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 120px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+  }
+
+  // ::-webkit-scrollbar-track {
+  //   background: transparent;
+  // }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgb(0 0 0 / 5%);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    // background-color: rgba(144, 147, 153, 0.3);
+    border-radius: 2px;
+    // background: rgba(0, 0, 0, 0.6);
+    background-color: rgb(144 147 153 / 30%);
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 20%);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #b6b7b9;
+  }
 }
 .detail-images img {
   width: 48px;
