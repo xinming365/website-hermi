@@ -1,0 +1,245 @@
+.content-modules {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: stretch;
+    text-align: center;
+}
+
+
+
+.module-grid {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
+    grid-template-columns: repeat(4, 1fr); /* 固定4列 */
+    gap: 2rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 10rem;
+    font-size: 1rem;
+}
+
+.module {
+    width: 100%;
+    flex-basis: calc(25% - 20px);
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.module-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #3498db;
+}
+
+.module h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+
+.module ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+}
+
+.module li {
+    margin-bottom: 0.5rem;
+}
+/* 
+.module a {
+    text-decoration: none;
+    color: #0066cc;
+} */
+.module a {
+    color: #34495e;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.module a:hover {
+    color: #3498db;
+}
+
+.module:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* .module::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+} */
+
+/* .more-button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #0066cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 0.9em;
+} */
+
+.more-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.more-button:hover {
+    background-color: #2980b9;
+}
+
+
+@media (max-width: 768px) {
+    .module {
+        flex-basis: calc(50% - 20px);
+        /* width: 100%; */
+    }
+}
+
+@media (max-width: 480px) {
+    .module {
+        flex-basis: 100%;
+        /* width: 100%; */
+    }
+}
+
+
+
+
+
+/* 产品介绍模块样式 */
+.product-intro {
+    display: grid;
+    /* margin-top: 30px; */
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-intro-title {
+    text-align: center;
+    font-size: 28px;
+    color: #2c3e50;  /* 改用更专业的高级灰色调 */
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    position: relative;
+    margin: 20px 0 40px;  /* 优化上下间距 */
+}
+
+.product-intro-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        rgba(44, 62, 80, 0.8),  /* 更改渐变颜色以匹配标题 */
+        rgba(44, 62, 80, 0.2)
+    );
+    border-radius: 1.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);  /* 为下划线添加微妙阴影 */
+}
+
+.product-intro h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
+.product-image {
+    flex: 1;
+    max-width: 50%;
+    width: 48%;
+}
+
+.product-image img {
+    /* max-width: 100%; */
+    height: auto;
+    width: 60%;
+     object-fit: cover;
+    object-position: center; 
+}
+
+.product-description {
+    flex: 1;
+    padding: 20px;
+    width: 70%;
+}
+
+.product-description h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.product-description p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.product-description ul {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.product-description li {
+    color: #444;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.product-description li::before {
+    content: "•";
+    color: #0066cc;
+    font-size: 1.2em;
+    position: absolute;
+    left: 0;
+}
+
+.learn-more-button {
+    display: inline-block;
+    background-color: #0066cc;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.learn-more-button:hover {
+    background-color: #0052a3;
+}
