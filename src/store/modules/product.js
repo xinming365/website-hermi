@@ -1,51 +1,126 @@
-import { defineStore } from 'pinia'
-import productDataJson from '@/assets/product_data.json'
+import { defineStore } from "pinia";
+import { ref, computed } from "vue";
+import {
+  getProductListApi,
+  getProductDetailApi,
+  getProductsBySidApi,
+  getProductsByTidApi,
+  getProductsByFiltersApi
+} from "@/api/product";
+import { ElMessage } from "element-plus";
 
-export const useProductStore = defineStore('product', {
-  state: () => ({
-    productData: null,
-    currentTid: '',
-    tidList: [],
-    activeTab: 0
-  }),
-  
-  actions: {
-    async fetchProductData(sid, tid) {
+const useProductStore = defineStore(
+  "product",
+  () => {
+    // state
+    const productList = ref([]);
+    const currentProduct = ref(null);
+    const loading = ref(false);
+
+    // actions
+    async function getProductList(params) {
       try {
-        // 模拟数据获取
-        const data = productDataJson
-        
-        // 处理 tid 列表
-        this.tidList = data.tid_list || []
-        this.currentTid = tid
-        
-        this.productData = {
-          ...data,
-          tabs: [
-            {
-              name: '参数规格',
-              content: {
-                detail_desc: data.detail_desc,
-                detail_points: data.detail_points,
-                common_desc: data.common_desc,
-                common_points: data.common_points,
-                generalParams: data.general_params
-              }
-            },
-            // ... 其他 tabs 保持不变 ...
-          ]
-        }
+        loading.value = true;
+        const res = await getProductListApi(params);
+        productList.value = res.data;
       } catch (error) {
-        console.error("获取产品数据失败:", error)
+        console.error("获取商品列表失败:", error);
+        ElMessage.error("获取商品列表失败");
+      } finally {
+        loading.value = false;
       }
-    },
-    
-    setActiveTab(index) {
-      this.activeTab = index
-    },
-    
-    setCurrentTid(tid) {
-      this.currentTid = tid
+    }
+
+    async function getProductDetail(id) {
+      try {
+        loading.value = true;
+        const res = await getProductDetailApi(id);
+        currentProduct.value = res.data;
+        return res.data;
+      } catch (error) {
+        console.error("获取商品详情失败:", error);
+        ElMessage.error("获取商品详情失败");
+        return null;
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function getProductsBySid(sid) {
+      try {
+        loading.value = true;
+        const res = await getProductsBySidApi(sid);
+        productList.value = res.data;
+      } catch (error) {
+        console.error("获取商品列表失败:", error);
+        ElMessage.error("获取商品列表失败");
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function getProductsByTid(tid) {
+      try {
+        loading.value = true;
+        const res = await getProductsByTidApi(tid);
+        productList.value = res.data;
+      } catch (error) {
+        console.error("获取商品列表失败:", error);
+        ElMessage.error("获取商品列表失败");
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    async function getProductsByFilters(params) {
+      try {
+        loading.value = true;
+        const res = await getProductsByFiltersApi(params);
+        productList.value = res.data;
+      } catch (error) {
+        console.error("获取商品列表失败:", error);
+        ElMessage.error("获取商品列表失败");
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    // getters
+    const productCount = computed(() => productList.value.length);
+
+    // 清理函数
+    function clearCurrentProduct() {
+      currentProduct.value = null;
+    }
+
+    function clearProductList() {
+      productList.value = [];
+    }
+
+    return {
+      // state
+      productList,
+      currentProduct,
+      loading,
+
+      // actions
+      getProductList,
+      getProductDetail,
+      getProductsBySid,
+      getProductsByTid,
+      getProductsByFilters,
+      clearCurrentProduct,
+      clearProductList,
+
+      // getters
+      productCount
+    };
+  },
+  {
+    persist: {
+      paths: ['productList', 'currentProduct']
     }
   }
-})
+);
+
+export default useProductStore;
