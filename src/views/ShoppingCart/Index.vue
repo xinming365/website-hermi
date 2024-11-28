@@ -145,6 +145,7 @@
 import { computed, reactive, ref, watch, onMounted } from "vue";
 import GoodCard from "./GoodCard.vue";
 import useCartStore from "@/store/modules/cart";
+import useUserStore from "@/store/modules/user";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { validateFn } from "@/utils/validate/validate";
 
@@ -296,11 +297,24 @@ const reportRules = ref({
 const cartIds = computed(() => {
   return finalGoods.value.map((item) => item.cart_id);
 });
-const createReport = async () => {
-  const params = {
-    cartIds: cartIds.value,
-    ...reportForm.value,
-  };
+const createReport = async (fromBill) => {
+  let params = {};
+  if (fromBill) {
+    const userStore = useUserStore();
+    params = {
+      cartIds: cartIds.value,
+      email: userStore.userInfo.email,
+      phone: userStore.userInfo.phone,
+      unit: userStore.userInfo.company,
+      name: userStore.userInfo.username,
+    };
+  } else {
+    params = {
+      cartIds: cartIds.value,
+      ...reportForm.value,
+    };
+  }
+
   isPriceTable.value
     ? await cartStore.createPriceReport(params)
     : await cartStore.createShoppingReport(params);
@@ -324,9 +338,9 @@ const onCancel = () => {
   onResetFileds();
 };
 const onBill = () => {
-  if (!cartIds.value.length) return ElMessage.error("请选中要导出的商品!");
+  if (!cartIds.value.length) return ElMessage.error("请勾选要结算的商品!");
   isPriceTable.value = true;
-  createReport();
+  createReport(1);
 };
 </script>
 <style scoped lang="less">
